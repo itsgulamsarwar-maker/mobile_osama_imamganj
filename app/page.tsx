@@ -12,17 +12,7 @@ import QualityInspectorSection from '@/components/QualityInspectorSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import FAQSection from '@/components/FAQSection';
 import UrgentOfferBanner from '@/components/UrgentOfferBanner';
-import {
-  ShieldCheck,
-  Zap,
-  ArrowDown,
-  PhoneCall,
-  Video,
-  Instagram,
-  MapPin,
-  Flame,
-  CheckCircle,
-} from 'lucide-react';
+import { Instagram, MapPin } from 'lucide-react';
 
 export const revalidate = 0;
 export const dynamic = 'force-dynamic';
@@ -46,10 +36,6 @@ export default async function HomePage() {
   const instagramUrl =
     settings.instagramUrl || 'https://www.instagram.com/second_hand_mobile_hub1';
 
-  const generalWhatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    `Hi Osama! I am browsing your website and looking for a phone recommendation.`
-  )}`;
-
   return (
     <div className="min-h-screen bg-[#080c14] text-slate-100">
       {/* Hero Section */}
@@ -65,78 +51,17 @@ export default async function HomePage() {
             <span>{settings.address}</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight max-w-4xl mx-auto leading-tight sm:leading-none">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight max-w-3xl mx-auto leading-tight">
             Flagship Smartphones.{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-300">
               Honest Prices.
             </span>
           </h1>
 
-          <p className="mt-3 text-xs sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-2 text-xs sm:text-sm text-slate-400 max-w-xl mx-auto leading-relaxed">
             Welcome to <strong className="text-white font-bold">{settings.storeName}</strong>.
-            Verified battery health, original accessories, and a 7-day testing warranty on every device.
+            100% Genuine battery health, original accessories, and a 7-day testing warranty.
           </p>
-
-          {/* Quick Actions Bar */}
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
-            <a
-              href="#catalog-section"
-              className="inline-flex items-center justify-center space-x-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs sm:text-sm shadow-lg shadow-emerald-600/25 transition-all active:scale-95"
-            >
-              <span>Explore Stock</span>
-              <ArrowDown className="w-3.5 h-3.5" />
-            </a>
-
-            <a
-              href={generalWhatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center space-x-2 px-5 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-black text-xs sm:text-sm shadow-lg shadow-emerald-500/20 transition-all active:scale-95"
-            >
-              <Video className="w-4 h-4 fill-white text-transparent" />
-              <span>Video Inspection</span>
-            </a>
-
-            <a
-              href={`tel:${settings.phone.replace(/\s+/g, '')}`}
-              className="inline-flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.09] text-slate-200 border border-white/[0.08] font-bold text-xs sm:text-sm transition-all active:scale-95"
-            >
-              <PhoneCall className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Call: {settings.phone}</span>
-            </a>
-
-            <a
-              href={`https://maps.google.com/?q=${encodeURIComponent(
-                settings.address || 'Kolkata Bus Stand, Imamganj, Gaya, Bihar'
-              )}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.09] text-slate-200 border border-white/[0.08] font-bold text-xs sm:text-sm transition-all active:scale-95"
-            >
-              <MapPin className="w-3.5 h-3.5 text-cyan-400" />
-              <span>Directions</span>
-            </a>
-          </div>
-
-          {/* Micro Stats Row */}
-          <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-3xl mx-auto">
-            <div className="p-2.5 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
-              <span className="block text-lg sm:text-2xl font-black text-white">500+</span>
-              <span className="text-[10px] sm:text-xs text-slate-400 font-medium">Phones Sold in Bihar</span>
-            </div>
-            <div className="p-2.5 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
-              <span className="block text-lg sm:text-2xl font-black text-emerald-400">32-Point</span>
-              <span className="text-[10px] sm:text-xs text-slate-400 font-medium">Inspection Check</span>
-            </div>
-            <div className="p-2.5 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
-              <span className="block text-lg sm:text-2xl font-black text-cyan-400">7 Days</span>
-              <span className="text-[10px] sm:text-xs text-slate-400 font-medium">Testing Guarantee</span>
-            </div>
-            <div className="p-2.5 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
-              <span className="block text-lg sm:text-2xl font-black text-pink-400">1,200+</span>
-              <span className="text-[10px] sm:text-xs text-slate-400 font-medium">Instagram Family</span>
-            </div>
-          </div>
         </div>
       </section>
 
