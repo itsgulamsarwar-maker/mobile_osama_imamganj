@@ -3,38 +3,47 @@
 import React, { useState, useMemo } from 'react';
 import {
   Search,
-  Sparkles,
   Check,
-  Tag,
-  ArrowUpDown,
   Flame,
   MessageCircle,
   X,
   SlidersHorizontal,
   RotateCcw,
+  Sparkles,
+  ArrowUpDown,
+  Smartphone,
+  ChevronDown,
 } from 'lucide-react';
 import { MobileItem } from '@/lib/sanity.client';
 import MobileCard from './MobileCard';
 import MobileGalleryModal from './MobileGalleryModal';
 
-const BRAND_LIST = [
-  { name: 'All', icon: '⚡' },
-  { name: 'Apple', icon: '🍎' },
-  { name: 'Samsung', icon: '📱' },
-  { name: 'OnePlus', icon: '🔴' },
-  { name: 'Vivo', icon: '✨' },
-  { name: 'Realme', icon: '🟡' },
-  { name: 'Xiaomi', icon: '🟠' },
-  { name: 'Google', icon: '🔍' },
-  { name: 'Other', icon: '📦' },
+const BRANDS = [
+  'All',
+  'Apple',
+  'Samsung',
+  'OnePlus',
+  'Vivo',
+  'Realme',
+  'Xiaomi',
+  'Google',
+  'Other',
 ];
 
-const BUDGET_FILTERS = [
+const BUDGET_RANGES = [
   { label: 'All Budgets', min: 0, max: Infinity },
   { label: 'Under ₹20,000', min: 0, max: 20000 },
-  { label: '₹20k - ₹35k', min: 20000, max: 35000 },
-  { label: '₹35k - ₹50k', min: 35000, max: 50000 },
-  { label: 'Flagship ₹50k+', min: 50000, max: Infinity },
+  { label: '₹20,000 - ₹35,000', min: 20000, max: 35000 },
+  { label: '₹35,000 - ₹50,000', min: 35000, max: 50000 },
+  { label: 'Flagship Above ₹50,000', min: 50000, max: Infinity },
+];
+
+const CONDITIONS = ['All', 'Like New (10/10)', 'Good'];
+
+const SORT_OPTIONS = [
+  { value: 'latest', label: 'Latest Stock' },
+  { value: 'price-asc', label: 'Price: Low to High' },
+  { value: 'price-desc', label: 'Price: High to Low' },
 ];
 
 interface CatalogViewProps {
@@ -51,7 +60,11 @@ export default function CatalogView({
   const [onlyInStock, setOnlyInStock] = useState(false);
   const [onlyUrgentSales, setOnlyUrgentSales] = useState(false);
   const [selectedBudgetIndex, setSelectedBudgetIndex] = useState(0);
+  const [selectedCondition, setSelectedCondition] = useState('All');
   const [sortBy, setSortBy] = useState<'latest' | 'price-asc' | 'price-desc'>('latest');
+
+  // Filter Drawer State
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   // Modal Gallery state
   const [galleryMobile, setGalleryMobile] = useState<MobileItem | null>(null);
@@ -72,15 +85,15 @@ export default function CatalogView({
   // Brand item counts
   const brandCounts = useMemo(() => {
     const counts: Record<string, number> = { All: initialMobiles.length };
-    BRAND_LIST.slice(1).forEach((b) => {
-      counts[b.name] = initialMobiles.filter((m) => m.brand === b.name).length;
+    BRANDS.slice(1).forEach((b) => {
+      counts[b] = initialMobiles.filter((m) => m.brand === b).length;
     });
     return counts;
   }, [initialMobiles]);
 
   // Filter and sort logic
   const filteredMobiles = useMemo(() => {
-    const activeBudget = BUDGET_FILTERS[selectedBudgetIndex];
+    const activeBudget = BUDGET_RANGES[selectedBudgetIndex];
 
     return initialMobiles
       .filter((item) => {
@@ -91,6 +104,11 @@ export default function CatalogView({
 
         // Budget filter
         if (item.price < activeBudget.min || item.price > activeBudget.max) {
+          return false;
+        }
+
+        // Condition filter
+        if (selectedCondition !== 'All' && item.condition !== selectedCondition) {
           return false;
         }
 
@@ -130,6 +148,7 @@ export default function CatalogView({
     initialMobiles,
     selectedBrand,
     selectedBudgetIndex,
+    selectedCondition,
     searchQuery,
     onlyInStock,
     onlyUrgentSales,
@@ -139,68 +158,86 @@ export default function CatalogView({
   const resetFilters = () => {
     setSelectedBrand('All');
     setSelectedBudgetIndex(0);
+    setSelectedCondition('All');
     setSearchQuery('');
     setOnlyInStock(false);
     setOnlyUrgentSales(false);
     setSortBy('latest');
   };
 
-  const isFilterActive =
-    selectedBrand !== 'All' ||
-    selectedBudgetIndex !== 0 ||
-    onlyInStock ||
-    onlyUrgentSales ||
-    searchQuery.trim().length > 0;
+  const activeFilterCount =
+    (selectedBrand !== 'All' ? 1 : 0) +
+    (selectedBudgetIndex !== 0 ? 1 : 0) +
+    (selectedCondition !== 'All' ? 1 : 0) +
+    (onlyInStock ? 1 : 0) +
+    (onlyUrgentSales ? 1 : 0);
 
   return (
     <div id="catalog-section" className="scroll-mt-24">
-      {/* Modern App Search & Filter Header */}
-      <div className="space-y-3 mb-6">
-        {/* Search Bar */}
-        <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-            <Search className="w-4 h-4 text-emerald-400" />
+      {/* 1. Main Search & Filter Action Bar */}
+      <div className="space-y-3 mb-5">
+        <div className="flex items-center gap-2">
+          {/* Search Box */}
+          <div className="relative flex-1">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+              <Search className="w-4 h-4 text-emerald-400" />
+            </div>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search iPhone, Galaxy, Vivo, 128GB..."
+              className="w-full pl-10 pr-9 py-2.5 sm:py-3 bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.09] focus:border-emerald-500/60 rounded-2xl text-xs sm:text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all shadow-inner"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-white transition-colors"
+                aria-label="Clear search"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
           </div>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search iPhone, Samsung, OnePlus, Vivo..."
-            className="w-full pl-10 pr-10 py-3 bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.09] focus:border-emerald-500/60 rounded-2xl text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all shadow-inner"
-          />
-          {searchQuery && (
-            <button
-              onClick={() => setSearchQuery('')}
-              className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-white transition-colors"
-              aria-label="Clear search"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          )}
+
+          {/* Professional Filter Menu Button */}
+          <button
+            onClick={() => setIsDrawerOpen(true)}
+            className={`flex items-center space-x-1.5 px-3.5 py-2.5 sm:py-3 rounded-2xl text-xs font-bold border transition-all active:scale-95 shrink-0 shadow-sm ${
+              activeFilterCount > 0
+                ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 shadow-emerald-500/10'
+                : 'bg-white/[0.04] hover:bg-white/[0.08] text-slate-200 border-white/[0.09]'
+            }`}
+          >
+            <SlidersHorizontal className="w-4 h-4 text-emerald-400" />
+            <span>Filters</span>
+            {activeFilterCount > 0 && (
+              <span className="w-4 h-4 rounded-full bg-emerald-500 text-white text-[10px] font-black flex items-center justify-center">
+                {activeFilterCount}
+              </span>
+            )}
+          </button>
         </div>
 
-        {/* Brand Stories / Tabs Bar (Horizontal Swipe) */}
-        <div className="flex items-center space-x-2 overflow-x-auto no-scrollbar py-1">
-          {BRAND_LIST.map((brand) => {
-            const isSelected = selectedBrand === brand.name;
-            const count = brandCounts[brand.name] || 0;
+        {/* 2. Professional Brand Horizontal Carousel */}
+        <div className="flex items-center space-x-1.5 overflow-x-auto no-scrollbar py-0.5">
+          {BRANDS.map((brand) => {
+            const isSelected = selectedBrand === brand;
+            const count = brandCounts[brand] || 0;
             return (
               <button
-                key={brand.name}
-                onClick={() => setSelectedBrand(brand.name)}
-                className={`flex items-center space-x-1.5 px-3.5 py-2 rounded-2xl text-xs font-bold whitespace-nowrap transition-all active:scale-95 ${
+                key={brand}
+                onClick={() => setSelectedBrand(brand)}
+                className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all active:scale-95 ${
                   isSelected
-                    ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25'
-                    : 'bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 border border-white/[0.06]'
+                    ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold shadow-md shadow-emerald-500/20'
+                    : 'bg-white/[0.03] hover:bg-white/[0.07] text-slate-300 border border-white/[0.06]'
                 }`}
               >
-                <span className="text-xs">{brand.icon}</span>
-                <span>{brand.name}</span>
+                <span>{brand}</span>
                 <span
-                  className={`text-[10px] px-1.5 py-0.5 rounded-full font-semibold ${
-                    isSelected
-                      ? 'bg-white/20 text-white'
-                      : 'bg-white/[0.06] text-slate-400'
+                  className={`text-[10px] px-1.5 py-0.2 rounded-full font-medium ${
+                    isSelected ? 'bg-white/20 text-white' : 'bg-white/[0.05] text-slate-400'
                   }`}
                 >
                   {count}
@@ -210,95 +247,94 @@ export default function CatalogView({
           })}
         </div>
 
-        {/* Filter Quick Pills (Urgent Deals, In Stock, Budgets) */}
-        <div className="flex items-center space-x-2 overflow-x-auto no-scrollbar py-1 text-xs">
-          {/* Urgent Deals Toggle */}
-          <button
-            onClick={() => setOnlyUrgentSales(!onlyUrgentSales)}
-            className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition-all active:scale-95 shrink-0 ${
-              onlyUrgentSales
-                ? 'bg-gradient-to-r from-amber-500 to-rose-500 text-white shadow-md shadow-rose-500/25 border border-rose-400/40'
-                : 'bg-white/[0.03] hover:bg-white/[0.06] text-amber-400/90 border border-amber-500/30'
-            }`}
-          >
-            <Flame className={`w-3.5 h-3.5 ${onlyUrgentSales ? 'fill-white' : 'fill-amber-400'}`} />
-            <span>Urgent Deals</span>
-          </button>
+        {/* 3. Active Filters Dismissible Tags (If Any Filter Active) */}
+        {activeFilterCount > 0 && (
+          <div className="flex flex-wrap items-center gap-1.5 pt-1 text-xs">
+            <span className="text-[11px] text-slate-500 font-medium mr-1">Active:</span>
 
-          {/* In Stock Toggle */}
-          <button
-            onClick={() => setOnlyInStock(!onlyInStock)}
-            className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition-all active:scale-95 shrink-0 ${
-              onlyInStock
-                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/50'
-                : 'bg-white/[0.03] hover:bg-white/[0.06] text-slate-300 border border-white/[0.07]'
-            }`}
-          >
-            <div
-              className={`w-3.5 h-3.5 rounded flex items-center justify-center border ${
-                onlyInStock
-                  ? 'bg-emerald-500 border-emerald-400 text-white'
-                  : 'border-slate-600'
-              }`}
-            >
-              {onlyInStock && <Check className="w-2.5 h-2.5" />}
-            </div>
-            <span>In Stock</span>
-          </button>
-
-          {/* Budget Pills */}
-          {BUDGET_FILTERS.map((b, idx) => {
-            const isSelected = selectedBudgetIndex === idx;
-            return (
+            {selectedBrand !== 'All' && (
               <button
-                key={idx}
-                onClick={() => setSelectedBudgetIndex(idx)}
-                className={`px-3 py-1.5 rounded-xl font-medium whitespace-nowrap transition-all active:scale-95 shrink-0 ${
-                  isSelected
-                    ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 font-bold'
-                    : 'bg-white/[0.03] hover:bg-white/[0.06] text-slate-400 border border-white/[0.07]'
-                }`}
+                onClick={() => setSelectedBrand('All')}
+                className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[11px] font-semibold"
               >
-                {b.label}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Results Bar / Sort / Reset */}
-        <div className="flex items-center justify-between pt-1 px-1 text-xs text-slate-400">
-          <div className="flex items-center space-x-2">
-            <span>
-              <strong className="text-white font-extrabold">{filteredMobiles.length}</strong> phones available
-            </span>
-            {isFilterActive && (
-              <button
-                onClick={resetFilters}
-                className="inline-flex items-center space-x-1 text-emerald-400 hover:text-emerald-300 font-bold ml-2 transition-colors"
-              >
-                <RotateCcw className="w-3 h-3" />
-                <span>Reset</span>
+                <span>{selectedBrand}</span>
+                <X className="w-3 h-3" />
               </button>
             )}
-          </div>
 
-          <div className="flex items-center space-x-1.5">
-            <span className="text-[11px] text-slate-500 hidden sm:inline">Sort:</span>
+            {selectedBudgetIndex !== 0 && (
+              <button
+                onClick={() => setSelectedBudgetIndex(0)}
+                className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg bg-cyan-500/15 border border-cyan-500/30 text-cyan-300 text-[11px] font-semibold"
+              >
+                <span>{BUDGET_RANGES[selectedBudgetIndex].label}</span>
+                <X className="w-3 h-3" />
+              </button>
+            )}
+
+            {selectedCondition !== 'All' && (
+              <button
+                onClick={() => setSelectedCondition('All')}
+                className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg bg-white/[0.05] border border-white/[0.1] text-slate-300 text-[11px]"
+              >
+                <span>{selectedCondition}</span>
+                <X className="w-3 h-3" />
+              </button>
+            )}
+
+            {onlyUrgentSales && (
+              <button
+                onClick={() => setOnlyUrgentSales(false)}
+                className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-300 text-[11px] font-semibold"
+              >
+                <span>🔥 Urgent Deals</span>
+                <X className="w-3 h-3" />
+              </button>
+            )}
+
+            {onlyInStock && (
+              <button
+                onClick={() => setOnlyInStock(false)}
+                className="inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-[11px] font-semibold"
+              >
+                <span>In Stock Only</span>
+                <X className="w-3 h-3" />
+              </button>
+            )}
+
+            <button
+              onClick={resetFilters}
+              className="text-[11px] text-slate-400 hover:text-rose-400 font-bold ml-1 transition-colors underline underline-offset-2"
+            >
+              Clear All
+            </button>
+          </div>
+        )}
+
+        {/* 4. Results Count & Sort Dropdown */}
+        <div className="flex items-center justify-between pt-1 px-0.5 text-xs text-slate-400">
+          <span>
+            <strong className="text-white font-black">{filteredMobiles.length}</strong> phones available
+          </span>
+
+          <div className="flex items-center space-x-1">
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
               aria-label="Sort phones"
-              className="bg-white/[0.04] border border-white/[0.08] text-slate-300 font-semibold text-xs rounded-xl px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-emerald-500 cursor-pointer"
+              className="bg-white/[0.04] border border-white/[0.08] text-slate-300 font-semibold text-xs rounded-xl px-2.5 py-1 focus:outline-none focus:ring-1 focus:ring-emerald-500 cursor-pointer"
             >
-              <option value="latest" className="bg-slate-900 text-slate-100">Latest Stock</option>
-              <option value="price-asc" className="bg-slate-900 text-slate-100">Price: Low to High</option>
-              <option value="price-desc" className="bg-slate-900 text-slate-100">Price: High to Low</option>
+              {SORT_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value} className="bg-slate-900 text-slate-100">
+                  {opt.label}
+                </option>
+              ))}
             </select>
           </div>
         </div>
       </div>
 
-      {/* Mobiles Card Grid */}
+      {/* 5. Mobiles Grid */}
       {filteredMobiles.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {filteredMobiles.map((mobile) => (
@@ -320,8 +356,8 @@ export default function CatalogView({
           </h3>
           <p className="text-xs text-slate-400 mb-5 leading-relaxed">
             {searchQuery
-              ? `Yeh phone abhi counter pe available nahi hai, lekin Osama bhaiya aapke liye arrange karwa sakte hain!`
-              : 'Try resetting filters or search for another phone model.'}
+              ? 'Yeh phone abhi counter pe available nahi hai, lekin Osama bhaiya aapke liye arrange karwa sakte hain!'
+              : 'Try clearing filters to see all available stock.'}
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5">
@@ -329,7 +365,7 @@ export default function CatalogView({
               onClick={resetFilters}
               className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] text-slate-200 font-bold text-xs transition-colors border border-white/[0.08]"
             >
-              Show All Stock
+              Reset Filters
             </button>
 
             {searchQuery && (
@@ -345,6 +381,182 @@ export default function CatalogView({
                 <span>Ask on WhatsApp</span>
               </a>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* 6. Professional Filter Menu Drawer (Bottom Sheet on Mobile, Modal on Desktop) */}
+      {isDrawerOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/80 backdrop-blur-sm animate-fadeIn"
+          onClick={() => setIsDrawerOpen(false)}
+        >
+          <div
+            className="w-full sm:max-w-lg bg-[#0b101d] border-t sm:border border-white/10 rounded-t-3xl sm:rounded-3xl max-h-[85vh] flex flex-col shadow-2xl overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Drawer Header */}
+            <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.08] bg-white/[0.02]">
+              <div className="flex items-center space-x-2">
+                <SlidersHorizontal className="w-4 h-4 text-emerald-400" />
+                <h3 className="font-heading text-base font-bold text-white">Filter & Sort Phones</h3>
+              </div>
+              <div className="flex items-center space-x-3">
+                {activeFilterCount > 0 && (
+                  <button
+                    onClick={resetFilters}
+                    className="text-xs text-emerald-400 hover:text-emerald-300 font-bold transition-colors"
+                  >
+                    Reset All
+                  </button>
+                )}
+                <button
+                  onClick={() => setIsDrawerOpen(false)}
+                  className="p-1 rounded-full text-slate-400 hover:text-white hover:bg-white/[0.08] transition-colors"
+                  aria-label="Close filters"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+            </div>
+
+            {/* Drawer Body (Scrollable) */}
+            <div className="flex-1 overflow-y-auto p-5 space-y-6 scrollbar-thin">
+              {/* Brand Filter */}
+              <div>
+                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2.5">
+                  Select Brand:
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {BRANDS.map((brand) => {
+                    const isSelected = selectedBrand === brand;
+                    const count = brandCounts[brand] || 0;
+                    return (
+                      <button
+                        key={brand}
+                        onClick={() => setSelectedBrand(brand)}
+                        className={`flex items-center justify-between p-2.5 rounded-xl text-xs font-bold border transition-all ${
+                          isSelected
+                            ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50 shadow-sm'
+                            : 'bg-white/[0.03] hover:bg-white/[0.06] text-slate-300 border-white/[0.06]'
+                        }`}
+                      >
+                        <span className="truncate">{brand}</span>
+                        <span
+                          className={`text-[10px] px-1.5 py-0.2 rounded-full font-medium ${
+                            isSelected ? 'bg-emerald-500/40 text-white' : 'text-slate-500'
+                          }`}
+                        >
+                          {count}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Budget Range Filter */}
+              <div>
+                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2.5">
+                  Price / Budget Range:
+                </label>
+                <div className="space-y-1.5">
+                  {BUDGET_RANGES.map((b, idx) => {
+                    const isSelected = selectedBudgetIndex === idx;
+                    return (
+                      <button
+                        key={idx}
+                        onClick={() => setSelectedBudgetIndex(idx)}
+                        className={`w-full flex items-center justify-between p-3 rounded-xl text-xs font-semibold border transition-all ${
+                          isSelected
+                            ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/50 font-bold'
+                            : 'bg-white/[0.03] hover:bg-white/[0.06] text-slate-300 border-white/[0.06]'
+                        }`}
+                      >
+                        <span>{b.label}</span>
+                        {isSelected && <Check className="w-4 h-4 text-cyan-400" />}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Condition Filter */}
+              <div>
+                <label className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2.5">
+                  Physical Condition:
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {CONDITIONS.map((cond) => {
+                    const isSelected = selectedCondition === cond;
+                    return (
+                      <button
+                        key={cond}
+                        onClick={() => setSelectedCondition(cond)}
+                        className={`p-2.5 rounded-xl text-xs font-bold border text-center transition-all ${
+                          isSelected
+                            ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50'
+                            : 'bg-white/[0.03] hover:bg-white/[0.06] text-slate-300 border-white/[0.06]'
+                        }`}
+                      >
+                        {cond}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Special Toggles */}
+              <div className="pt-2 border-t border-white/[0.08] space-y-2.5">
+                <button
+                  onClick={() => setOnlyUrgentSales(!onlyUrgentSales)}
+                  className={`w-full flex items-center justify-between p-3 rounded-xl text-xs font-bold border transition-all ${
+                    onlyUrgentSales
+                      ? 'bg-gradient-to-r from-amber-500/20 to-rose-500/20 text-amber-200 border-amber-500/50'
+                      : 'bg-white/[0.03] text-slate-300 border-white/[0.06]'
+                  }`}
+                >
+                  <div className="flex items-center space-x-2">
+                    <Flame className={`w-4 h-4 ${onlyUrgentSales ? 'fill-amber-400 text-amber-400' : 'text-slate-400'}`} />
+                    <span>🔥 Urgent Clearance Deals Only</span>
+                  </div>
+                  <div className={`w-4 h-4 rounded flex items-center justify-center border ${onlyUrgentSales ? 'bg-amber-500 border-amber-400 text-white' : 'border-slate-600'}`}>
+                    {onlyUrgentSales && <Check className="w-3 h-3" />}
+                  </div>
+                </button>
+
+                <button
+                  onClick={() => setOnlyInStock(!onlyInStock)}
+                  className={`w-full flex items-center justify-between p-3 rounded-xl text-xs font-bold border transition-all ${
+                    onlyInStock
+                      ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50'
+                      : 'bg-white/[0.03] text-slate-300 border-white/[0.06]'
+                  }`}
+                >
+                  <div className="flex items-center space-x-2">
+                    <Smartphone className="w-4 h-4 text-emerald-400" />
+                    <span>In Stock Only (Hide Sold Out)</span>
+                  </div>
+                  <div className={`w-4 h-4 rounded flex items-center justify-center border ${onlyInStock ? 'bg-emerald-500 border-emerald-400 text-white' : 'border-slate-600'}`}>
+                    {onlyInStock && <Check className="w-3 h-3" />}
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            {/* Drawer Footer (Sticky CTA) */}
+            <div className="p-4 border-t border-white/[0.08] bg-[#0b101d] safe-area-bottom">
+              <button
+                onClick={() => setIsDrawerOpen(false)}
+                className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-sm shadow-xl shadow-emerald-600/30 active:scale-[0.98] transition-all flex items-center justify-center space-x-2"
+              >
+                <span>Apply Filters</span>
+                <span>•</span>
+                <span>{filteredMobiles.length} Phones Match</span>
+              </button>
+            </div>
           </div>
         </div>
       )}
