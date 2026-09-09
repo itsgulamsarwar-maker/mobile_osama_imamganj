@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   Smartphone,
   ShieldCheck,
@@ -11,14 +12,23 @@ import {
   Video,
   Instagram,
 } from 'lucide-react';
+import { SiteSettings, defaultSiteSettings } from '@/lib/sanity.client';
+import { getImageSrc } from '@/lib/sanity.image';
 
-export default function Footer() {
-  const whatsappNumber = process.env.NEXT_PUBLIC_STORE_WHATSAPP_NUMBER || '919102609396';
+interface FooterProps {
+  settings?: SiteSettings;
+}
+
+export default function Footer({ settings = defaultSiteSettings }: FooterProps) {
+  const whatsappNumber = settings.whatsappNumber || '919102609396';
   const instagramUrl =
-    process.env.NEXT_PUBLIC_STORE_INSTAGRAM_URL ||
-    'https://www.instagram.com/second_hand_mobile_hub1';
-  const storeAddress =
-    process.env.NEXT_PUBLIC_STORE_ADDRESS || 'Kolkata Bus Stand, Imamganj, Gaya, Bihar';
+    settings.instagramUrl || 'https://www.instagram.com/second_hand_mobile_hub1';
+  const storeAddress = settings.address || 'Kolkata Bus Stand, Imamganj, Gaya, Bihar';
+  const storePhone = settings.phone || '+91 9102609396';
+  const openingHours =
+    settings.openingHours ||
+    'Monday - Saturday: 10:00 AM - 9:00 PM | Sunday: 11:00 AM - 7:00 PM';
+  const logoSrc = settings.logo ? getImageSrc(settings.logo) : null;
 
   return (
     <footer className="bg-slate-950 text-slate-400 text-sm mt-24 border-t border-slate-800/80 relative">
@@ -82,14 +92,24 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
             <div className="flex items-center space-x-2.5 text-white font-black text-xl mb-3">
-              <Smartphone className="w-6 h-6 text-emerald-400" />
-              <span>
-                SECOND HAND MOBILE HUB <span className="text-emerald-400">IMAMGANJ</span>
-              </span>
+              {logoSrc ? (
+                <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0">
+                  <Image
+                    src={logoSrc}
+                    alt={settings.storeName}
+                    width={32}
+                    height={32}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ) : (
+                <Smartphone className="w-6 h-6 text-emerald-400" />
+              )}
+              <span>{settings.storeName}</span>
             </div>
             <p className="text-xs leading-relaxed text-slate-400 max-w-sm mb-5">
-              Imamganj Gaya ka sabse bharosemand second-hand aur refurbished smartphones showroom.
-              100% genuine IMEI, original bill & box, aur verified hardware testing.
+              {settings.storeTagline ||
+                'Imamganj Gaya ka sabse bharosemand second-hand aur refurbished smartphones showroom. 100% genuine IMEI, original bill & box, aur verified hardware testing.'}
             </p>
 
             <div className="space-y-2">
@@ -111,7 +131,7 @@ export default function Footer() {
                   className="inline-flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-pink-500/15 via-purple-500/15 to-amber-500/15 border border-pink-500/30 text-pink-300 hover:text-white transition-all font-semibold"
                 >
                   <Instagram className="w-4 h-4 text-pink-400" />
-                  <span>Instagram: @second_hand_mobile_hub1</span>
+                  <span>Instagram: {settings.instagramHandle || '@second_hand_mobile_hub1'}</span>
                 </a>
               </li>
               <li>
@@ -122,7 +142,7 @@ export default function Footer() {
                   className="inline-flex items-center space-x-2 px-3.5 py-2 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 hover:text-white transition-all font-semibold"
                 >
                   <MessageCircle className="w-4 h-4 text-emerald-400" />
-                  <span>WhatsApp: +91 9102609396</span>
+                  <span>WhatsApp: {storePhone}</span>
                 </a>
               </li>
               <li>
@@ -136,24 +156,24 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-white text-sm mb-4">Retail Counter Timings</h4>
             <p className="text-xs text-slate-400 mb-3 leading-relaxed">
-              Monday - Saturday: 10:00 AM - 9:00 PM<br />
-              Sunday: 11:00 AM - 7:00 PM<br />
-              <span className="text-emerald-400 font-semibold">Counter: Kolkata Bus Stand, Imamganj</span>
+              {openingHours}
+              <br />
+              <span className="text-emerald-400 font-semibold">Location: {storeAddress}</span>
             </p>
             <div className="pt-1">
               <a
-                href={`tel:+${whatsappNumber}`}
+                href={`tel:${storePhone.replace(/\s+/g, '')}`}
                 className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 hover:text-white hover:border-emerald-500 text-xs font-bold transition-all shadow-sm"
               >
                 <Phone className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Direct Call: +91 9102609396</span>
+                <span>Direct Call: {storePhone}</span>
               </a>
             </div>
           </div>
         </div>
 
         <div className="mt-12 pt-6 border-t border-slate-800 text-center text-xs text-slate-500">
-          © {new Date().getFullYear()} Second Hand Mobile Hub Imamganj (Gaya, Bihar). All Rights Reserved.
+          © {new Date().getFullYear()} {settings.storeName}. All Rights Reserved.
         </div>
       </div>
     </footer>

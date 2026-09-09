@@ -1,5 +1,11 @@
 import React from 'react';
-import { client, mobilesQuery, MobileItem } from '@/lib/sanity.client';
+import {
+  client,
+  mobilesQuery,
+  MobileItem,
+  getSiteSettings,
+  SiteSettings,
+} from '@/lib/sanity.client';
 import { mockMobiles } from '@/lib/mockData';
 import CatalogView from '@/components/CatalogView';
 import QualityInspectorSection from '@/components/QualityInspectorSection';
@@ -35,14 +41,14 @@ async function getMobiles(): Promise<MobileItem[]> {
 }
 
 export default async function HomePage() {
-  const mobiles = await getMobiles();
-  const whatsappNumber = process.env.NEXT_PUBLIC_STORE_WHATSAPP_NUMBER || '919102609396';
+  const [mobiles, settings] = await Promise.all([getMobiles(), getSiteSettings()]);
+
+  const whatsappNumber = settings.whatsappNumber || '919102609396';
   const instagramUrl =
-    process.env.NEXT_PUBLIC_STORE_INSTAGRAM_URL ||
-    'https://www.instagram.com/second_hand_mobile_hub1';
+    settings.instagramUrl || 'https://www.instagram.com/second_hand_mobile_hub1';
 
   const generalWhatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    'Hi! I am browsing Second Hand Mobile Hub Imamganj and looking for a phone recommendation.'
+    `Hi! I am browsing ${settings.storeName} and looking for a phone recommendation.`
   )}`;
 
   return (
@@ -58,7 +64,7 @@ export default async function HomePage() {
           {/* Top Pill with Location */}
           <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-emerald-950/80 border border-emerald-500/30 text-emerald-300 text-xs font-bold mb-6 backdrop-blur-md shadow-lg shadow-emerald-950/50">
             <MapPin className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Kolkata Bus Stand, Imamganj (Gaya, Bihar)</span>
+            <span>{settings.address}</span>
           </div>
 
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight max-w-5xl mx-auto leading-[1.1] sm:leading-none">
@@ -69,7 +75,7 @@ export default async function HomePage() {
           </h1>
 
           <p className="mt-6 text-sm sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            Welcome to <strong className="text-white">Second Hand Mobile Hub Imamganj</strong>.
+            Welcome to <strong className="text-white">{settings.storeName}</strong>.
             Every phone undergoes our certified 32-point inspection with genuine battery health,
             authentic box & accessories, and a 7-day testing warranty.
           </p>
@@ -91,7 +97,7 @@ export default async function HomePage() {
               className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-7 py-3.5 rounded-2xl bg-gradient-to-r from-pink-600/20 via-purple-600/20 to-amber-600/20 hover:from-pink-600/30 hover:to-purple-600/30 border border-pink-500/40 text-pink-300 hover:text-white font-bold text-sm transition-all"
             >
               <Instagram className="w-4 h-4 text-pink-400" />
-              <span>Follow on Instagram (@second_hand_mobile_hub1)</span>
+              <span>Instagram ({settings.instagramHandle || '@second_hand_mobile_hub1'})</span>
             </a>
 
             <a
@@ -101,7 +107,7 @@ export default async function HomePage() {
               className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-7 py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-200 hover:text-white border border-slate-700/80 font-bold text-sm transition-all"
             >
               <Video className="w-4 h-4 text-emerald-400" />
-              <span>WhatsApp: +91 9102609396</span>
+              <span>WhatsApp: {settings.phone}</span>
             </a>
           </div>
 
@@ -148,7 +154,10 @@ export default async function HomePage() {
               </h3>
               <p className="text-xs sm:text-sm text-slate-300 mt-1">
                 Watch real testing videos and new stock arrivals on{' '}
-                <strong className="text-pink-400">@second_hand_mobile_hub1</strong> (1,228+ Followers).
+                <strong className="text-pink-400">
+                  {settings.instagramHandle || '@second_hand_mobile_hub1'}
+                </strong>{' '}
+                (1,228+ Followers).
               </p>
             </div>
           </div>

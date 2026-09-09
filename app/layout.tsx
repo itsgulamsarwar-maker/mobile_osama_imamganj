@@ -3,40 +3,45 @@ import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import FloatingWhatsApp from '@/components/FloatingWhatsApp';
+import { getSiteSettings } from '@/lib/sanity.client';
 
 export const metadata: Metadata = {
-  title: 'Second-Hand Mobile Hub | Certified Refurbished & Used Smartphones',
+  title: 'SECOND HAND MOBILE HUB IMAMGANJ | Certified Refurbished & Used Smartphones',
   description:
-    'Browse 100% verified, inspected, second-hand smartphones with battery health check, original accessories, and real-time prices. Chat on WhatsApp for direct purchase.',
+    'Kolkata bus stand Imamganj (Gaya, Bihar). 100% verified, inspected, second-hand smartphones with battery health check, original accessories, and real-time prices.',
   keywords: [
-    'second hand mobile',
-    'used phones',
-    'refurbished iphone',
-    'samsung galaxy used',
-    'oneplus used phone',
-    'cheap second hand smartphones',
+    'second hand mobile imamganj',
+    'used phones gaya bihar',
+    'refurbished iphone bihar',
+    'second hand mobile hub',
+    'samsung galaxy used imamganj',
     'buy used phone on whatsapp',
   ],
   openGraph: {
-    title: 'Second-Hand Mobile Hub | Quality Refurbished Smartphones',
+    title: 'SECOND HAND MOBILE HUB IMAMGANJ | Quality Refurbished Smartphones',
     description:
-      'Buy certified used smartphones with genuine battery health and 7-day warranty. Instant WhatsApp deal.',
+      'Buy certified used smartphones with genuine battery health and 7-day warranty in Imamganj, Gaya. Instant WhatsApp deal.',
     type: 'website',
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const settings = await getSiteSettings();
+
   return (
     <html lang="en">
-      <body className="min-h-screen flex flex-col bg-slate-50 text-slate-900 font-sans selection:bg-emerald-500 selection:text-white">
-        <Header />
+      <body className="min-h-screen flex flex-col bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500 selection:text-white">
+        <Header settings={settings} />
         <main className="flex-1">{children}</main>
-        <Footer />
-        <FloatingWhatsApp />
+        <Footer settings={settings} />
+        <FloatingWhatsApp
+          whatsappNumber={settings.whatsappNumber}
+          instagramUrl={settings.instagramUrl}
+        />
       </body>
     </html>
   );

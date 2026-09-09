@@ -1,17 +1,28 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Smartphone, Lock, MessageCircle, Phone, MapPin, Instagram } from 'lucide-react';
+import { SiteSettings, defaultSiteSettings } from '@/lib/sanity.client';
+import { getImageSrc } from '@/lib/sanity.image';
 
-export default function Header() {
-  const whatsappNumber = process.env.NEXT_PUBLIC_STORE_WHATSAPP_NUMBER || '919102609396';
+interface HeaderProps {
+  settings?: SiteSettings;
+}
+
+export default function Header({ settings = defaultSiteSettings }: HeaderProps) {
+  const whatsappNumber = settings.whatsappNumber || '919102609396';
   const instagramUrl =
-    process.env.NEXT_PUBLIC_STORE_INSTAGRAM_URL ||
-    'https://www.instagram.com/second_hand_mobile_hub1';
-  const storeAddress =
-    process.env.NEXT_PUBLIC_STORE_ADDRESS || 'Kolkata Bus Stand, Imamganj, Gaya, Bihar';
+    settings.instagramUrl || 'https://www.instagram.com/second_hand_mobile_hub1';
+  const storeAddress = settings.address || 'Kolkata Bus Stand, Imamganj, Gaya, Bihar';
+  const storePhone = settings.phone || '+91 9102609396';
+  const announcement =
+    settings.announcement ||
+    'Imamganj Retail Counter Open • 32-Point Quality Inspected • 7-Day Testing Guarantee';
+
+  const logoSrc = settings.logo ? getImageSrc(settings.logo) : null;
 
   const directSupportUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    'Hello! I am contacting Second Hand Mobile Hub Imamganj regarding available smartphones.'
+    `Hello! I am contacting ${settings.storeName} regarding available smartphones.`
   )}`;
 
   return (
@@ -24,11 +35,7 @@ export default function Header() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            <span className="font-semibold text-emerald-400">Imamganj Retail Counter Open</span>
-            <span className="text-slate-500">•</span>
-            <span className="text-slate-300 text-[11px] sm:text-xs">
-              32-Point Quality Inspected • 7-Day Testing Guarantee
-            </span>
+            <span className="font-semibold text-emerald-400">{announcement}</span>
           </div>
 
           <div className="hidden md:flex items-center space-x-4 text-[11px] text-slate-400">
@@ -38,11 +45,11 @@ export default function Header() {
             </span>
             <span>•</span>
             <a
-              href={`tel:+${whatsappNumber}`}
+              href={`tel:${storePhone.replace(/\s+/g, '')}`}
               className="flex items-center hover:text-emerald-400 transition-colors font-semibold"
             >
               <Phone className="w-3 h-3 mr-1 text-emerald-400" />
-              +91 9102609396
+              {storePhone}
             </a>
           </div>
         </div>
@@ -50,24 +57,31 @@ export default function Header() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
-          {/* Logo */}
+          {/* Logo & Store Name */}
           <Link href="/" className="flex items-center space-x-3 group">
-            <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-cyan-400 p-[1.5px] shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
-              <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center text-emerald-400">
-                <Smartphone className="w-6 h-6 group-hover:rotate-6 transition-transform" />
+            <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-cyan-400 p-[1.5px] shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform overflow-hidden">
+              <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center text-emerald-400 overflow-hidden">
+                {logoSrc ? (
+                  <Image
+                    src={logoSrc}
+                    alt={settings.storeName}
+                    width={48}
+                    height={48}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <Smartphone className="w-6 h-6 group-hover:rotate-6 transition-transform" />
+                )}
               </div>
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xl sm:text-2xl font-black text-white tracking-tight">
-                  Mobile<span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Hub</span>
-                </span>
-                <span className="text-[10px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-md">
-                  Imamganj
+                <span className="text-lg sm:text-xl font-black text-white tracking-tight line-clamp-1">
+                  {settings.storeName}
                 </span>
               </div>
               <p className="text-[11px] text-slate-400 font-medium hidden sm:block">
-                Certified 2nd Hand Smartphones • Gaya, Bihar
+                {settings.storeTagline || 'Certified 2nd Hand Smartphones • Gaya, Bihar'}
               </p>
             </div>
           </Link>
@@ -80,7 +94,7 @@ export default function Header() {
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center space-x-1.5 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl text-xs font-bold text-pink-300 hover:text-white bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-amber-500/10 hover:from-pink-500/20 hover:to-purple-500/20 border border-pink-500/30 transition-all shadow-sm"
-              title="Follow on Instagram @second_hand_mobile_hub1"
+              title={`Follow on Instagram ${settings.instagramHandle || ''}`}
             >
               <Instagram className="w-4 h-4 text-pink-400" />
               <span className="hidden sm:inline">Instagram</span>

@@ -3,12 +3,17 @@
 import React, { useState } from 'react';
 import { MessageCircle, X, Video, RefreshCw, Zap, Instagram } from 'lucide-react';
 
-export default function FloatingWhatsApp() {
+interface FloatingWhatsAppProps {
+  whatsappNumber?: string;
+  instagramUrl?: string;
+}
+
+export default function FloatingWhatsApp({
+  whatsappNumber = process.env.NEXT_PUBLIC_STORE_WHATSAPP_NUMBER || '919102609396',
+  instagramUrl = process.env.NEXT_PUBLIC_STORE_INSTAGRAM_URL ||
+    'https://www.instagram.com/second_hand_mobile_hub1',
+}: FloatingWhatsAppProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const whatsappNumber = process.env.NEXT_PUBLIC_STORE_WHATSAPP_NUMBER || '919102609396';
-  const instagramUrl =
-    process.env.NEXT_PUBLIC_STORE_INSTAGRAM_URL ||
-    'https://www.instagram.com/second_hand_mobile_hub1';
 
   const quickPrompts = [
     {
@@ -47,7 +52,7 @@ export default function FloatingWhatsApp() {
                 <h4 className="font-bold text-sm">Mobile Hub Imamganj</h4>
                 <p className="text-[11px] text-emerald-100 flex items-center">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 mr-1.5 animate-pulse" />
-                  +91 9102609396 • Online
+                  +{whatsappNumber} • Online
                 </p>
               </div>
             </div>
@@ -101,7 +106,7 @@ export default function FloatingWhatsApp() {
               </div>
               <div>
                 <h5 className="text-xs font-bold text-pink-300">Instagram Reels & Unboxing</h5>
-                <p className="text-[10px] text-slate-400">@second_hand_mobile_hub1</p>
+                <p className="text-[10px] text-slate-400">Follow for daily stock</p>
               </div>
             </a>
 
@@ -115,7 +120,7 @@ export default function FloatingWhatsApp() {
               className="w-full mt-2 flex items-center justify-center space-x-2 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg shadow-emerald-600/30 transition-colors"
             >
               <MessageCircle className="w-4 h-4 fill-white text-transparent" />
-              <span>Direct Chat: +91 9102609396</span>
+              <span>Direct Chat: +{whatsappNumber}</span>
             </a>
           </div>
         </div>
