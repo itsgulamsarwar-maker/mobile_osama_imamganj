@@ -3,6 +3,7 @@ import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import FloatingWhatsApp from '@/components/FloatingWhatsApp';
+import MobileBottomBar from '@/components/MobileBottomBar';
 import { getSiteSettings } from '@/lib/sanity.client';
 
 export const metadata: Metadata = {
@@ -37,12 +38,13 @@ export default async function RootLayout({
     <html lang="en">
       <body className="min-h-screen flex flex-col bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500 selection:text-white">
         <Header settings={settings} />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 pb-16 md:pb-0">{children}</main>
         <Footer settings={settings} />
         <FloatingWhatsApp
           whatsappNumber={settings.whatsappNumber}
           instagramUrl={settings.instagramUrl}
         />
+        <MobileBottomBar settings={settings} />
       </body>
     </html>
   );

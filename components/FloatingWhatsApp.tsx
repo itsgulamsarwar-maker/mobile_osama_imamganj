@@ -37,7 +37,7 @@ export default function FloatingWhatsApp({
   ];
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+    <div className="fixed bottom-20 md:bottom-6 right-4 sm:right-6 z-50 flex flex-col items-end">
       {/* Expanded Quick Chat Window */}
       {isOpen && (
         <div className="mb-3 w-80 sm:w-96 bg-slate-900 border border-slate-700/80 rounded-3xl shadow-2xl overflow-hidden animate-fadeIn backdrop-blur-xl">

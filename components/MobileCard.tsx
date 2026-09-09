@@ -164,7 +164,7 @@ export default function MobileCard({ mobile, onOpenGallery }: MobileCardProps) {
       </div>
 
       {/* Card Body */}
-      <div className="flex flex-col flex-1 p-5">
+      <div className="flex flex-col flex-1 p-4 sm:p-5">
         {/* Title and Condition Tag */}
         <div className="mb-2">
           <h3 className="font-bold text-white text-lg group-hover:text-emerald-300 transition-colors line-clamp-1">

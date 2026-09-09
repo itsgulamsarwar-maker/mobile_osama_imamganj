@@ -76,7 +76,7 @@ export default function Header({ settings = defaultSiteSettings }: HeaderProps) 
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-lg sm:text-xl font-black text-white tracking-tight line-clamp-1">
+                <span className="text-base sm:text-xl font-black text-white tracking-tight line-clamp-1">
                   {settings.storeName}
                 </span>
               </div>
@@ -87,13 +87,23 @@ export default function Header({ settings = defaultSiteSettings }: HeaderProps) 
           </Link>
 
           {/* Right Action Links */}
-          <div className="flex items-center space-x-2.5 sm:space-x-3">
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            {/* Quick Call Button for Mobile */}
+            <a
+              href={`tel:${storePhone.replace(/\s+/g, '')}`}
+              className="inline-flex sm:hidden items-center justify-center p-2 rounded-xl text-emerald-400 bg-slate-900/90 border border-slate-800 active:scale-95 transition-all"
+              aria-label="Call Store"
+              title={`Call: ${storePhone}`}
+            >
+              <Phone className="w-4 h-4" />
+            </a>
+
             {/* Instagram Link */}
             <a
               href={instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center space-x-1.5 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl text-xs font-bold text-pink-300 hover:text-white bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-amber-500/10 hover:from-pink-500/20 hover:to-purple-500/20 border border-pink-500/30 transition-all shadow-sm"
+              className="inline-flex items-center space-x-1.5 px-2.5 py-2 sm:px-3.5 sm:py-2.5 rounded-xl text-xs font-bold text-pink-300 hover:text-white bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-amber-500/10 hover:from-pink-500/20 hover:to-purple-500/20 border border-pink-500/30 transition-all shadow-sm"
               title={`Follow on Instagram ${settings.instagramHandle || ''}`}
             >
               <Instagram className="w-4 h-4 text-pink-400" />
@@ -103,7 +113,7 @@ export default function Header({ settings = defaultSiteSettings }: HeaderProps) 
             {/* Sanity Studio Link for Shop Owner */}
             <Link
               href="/admin"
-              className="inline-flex items-center space-x-1.5 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl text-xs font-bold text-slate-300 hover:text-white bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 transition-all hover:border-emerald-500/50"
+              className="hidden sm:inline-flex items-center space-x-1.5 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl text-xs font-bold text-slate-300 hover:text-white bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 transition-all hover:border-emerald-500/50"
               title="Shop Owner Admin Panel"
             >
               <Lock className="w-3.5 h-3.5 text-emerald-400" />
