@@ -19,20 +19,20 @@ export default function FloatingWhatsApp({
     {
       icon: Video,
       title: 'Video Call Inspection',
-      desc: 'Inspect phone on live video',
-      msg: 'Hi! I would like to request a live video call to inspect a second-hand phone at Imamganj counter.',
+      desc: 'Live video phone check',
+      msg: 'Hi Osama! I want to request a live video call to inspect a phone before purchasing.',
     },
     {
       icon: RefreshCw,
       title: 'Exchange Old Phone',
-      desc: 'Get instant trade-in quote',
-      msg: 'Hi! I want to exchange my old smartphone. What price will I get?',
+      desc: 'Instant trade-in valuation',
+      msg: 'Hi Osama! I want to exchange my old smartphone. What exchange price will I get?',
     },
     {
       icon: Zap,
       title: "Today's Best Deal",
-      desc: 'Check newly arrived phones',
-      msg: "Hi! Can you share today's newly arrived second-hand smartphones and prices?",
+      desc: 'Check new arrivals & urgent sales',
+      msg: "Hi Osama! Can you please share today's newly arrived phones and special discount prices?",
     },
   ];
 
@@ -49,10 +49,10 @@ export default function FloatingWhatsApp({
                 <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-300 border-2 border-slate-900 rounded-full" />
               </div>
               <div>
-                <h4 className="font-bold text-sm">Mobile Hub Imamganj</h4>
+                <h4 className="font-bold text-sm">Osama Mobile Hub</h4>
                 <p className="text-[11px] text-emerald-100 flex items-center">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 mr-1.5 animate-pulse" />
-                  +{whatsappNumber} • Online
+                  +{whatsappNumber} • Active Now
                 </p>
               </div>
             </div>

@@ -3,9 +3,14 @@
 import React, { useState } from 'react';
 import { ChevronDown, HelpCircle, MessageCircle } from 'lucide-react';
 
-export default function FAQSection() {
+interface FAQSectionProps {
+  whatsappNumber?: string;
+}
+
+export default function FAQSection({
+  whatsappNumber = process.env.NEXT_PUBLIC_STORE_WHATSAPP_NUMBER || '919102609396',
+}: FAQSectionProps) {
   const [openIdx, setOpenIdx] = useState<number | null>(0);
-  const whatsappNumber = process.env.NEXT_PUBLIC_STORE_WHATSAPP_NUMBER || '919876543210';
 
   const faqs = [
     {

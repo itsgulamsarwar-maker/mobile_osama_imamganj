@@ -83,7 +83,7 @@ export default async function HomePage() {
           </p>
 
           {/* Quick CTA Buttons */}
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
             <a
               href="#catalog-section"
               className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-7 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-sm shadow-xl shadow-emerald-600/25 transition-all transform hover:scale-105 active:scale-95"
@@ -93,23 +93,43 @@ export default async function HomePage() {
             </a>
 
             <a
-              href={instagramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-7 py-3.5 rounded-2xl bg-gradient-to-r from-pink-600/20 via-purple-600/20 to-amber-600/20 hover:from-pink-600/30 hover:to-purple-600/30 border border-pink-500/40 text-pink-300 hover:text-white font-bold text-sm transition-all"
-            >
-              <Instagram className="w-4 h-4 text-pink-400" />
-              <span>Instagram ({settings.instagramHandle || '@second_hand_mobile_hub1'})</span>
-            </a>
-
-            <a
               href={generalWhatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-7 py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-200 hover:text-white border border-slate-700/80 font-bold text-sm transition-all"
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-7 py-3.5 rounded-2xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-black text-sm shadow-lg shadow-emerald-500/20 transition-all transform hover:scale-105 active:scale-95"
             >
-              <Video className="w-4 h-4 text-emerald-400" />
-              <span>WhatsApp: {settings.phone}</span>
+              <Video className="w-4 h-4 fill-white text-transparent" />
+              <span>WhatsApp Video Call</span>
+            </a>
+
+            <a
+              href={`tel:${settings.phone.replace(/\s+/g, '')}`}
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-6 py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-200 hover:text-white border border-slate-700/80 font-bold text-sm transition-all"
+            >
+              <PhoneCall className="w-4 h-4 text-emerald-400" />
+              <span>Call: {settings.phone}</span>
+            </a>
+
+            <a
+              href={`https://maps.google.com/?q=${encodeURIComponent(
+                settings.address || 'Kolkata Bus Stand, Imamganj, Gaya, Bihar'
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-6 py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-200 hover:text-white border border-slate-700/80 font-bold text-sm transition-all"
+            >
+              <MapPin className="w-4 h-4 text-cyan-400" />
+              <span>Get Directions</span>
+            </a>
+
+            <a
+              href={instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-pink-600/20 via-purple-600/20 to-amber-600/20 hover:from-pink-600/30 hover:to-purple-600/30 border border-pink-500/40 text-pink-300 hover:text-white font-bold text-sm transition-all"
+            >
+              <Instagram className="w-4 h-4 text-pink-400" />
+              <span>Instagram</span>
             </a>
           </div>
 
@@ -143,10 +163,10 @@ export default async function HomePage() {
         <UrgentOfferBanner settings={settings} />
 
         {/* Catalog Section */}
-        <CatalogView initialMobiles={mobiles} />
+        <CatalogView initialMobiles={mobiles} whatsappNumber={whatsappNumber} />
 
         {/* 32-Point Quality Inspector Breakdown */}
-        <QualityInspectorSection />
+        <QualityInspectorSection whatsappNumber={whatsappNumber} />
 
         {/* Instagram Follow Callout Banner */}
         <div className="my-12 bg-gradient-to-r from-pink-950/40 via-slate-900 to-purple-950/40 border border-pink-500/30 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xl">
@@ -183,7 +203,7 @@ export default async function HomePage() {
         <TestimonialsSection />
 
         {/* FAQ Accordion */}
-        <FAQSection />
+        <FAQSection whatsappNumber={whatsappNumber} />
       </section>
     </div>
   );

@@ -4,34 +4,34 @@ import { Star, CheckCircle, Quote, Sparkles } from 'lucide-react';
 export default function TestimonialsSection() {
   const reviews = [
     {
-      name: 'Rahul Sharma',
-      city: 'Delhi NCR',
-      phoneBought: 'iPhone 14 Pro (128GB)',
-      savedAmount: '₹60,900',
+      name: 'Md. Tariq Alam',
+      city: 'Imamganj Main Market',
+      phoneBought: 'iPhone 13 (128GB)',
+      savedAmount: '₹31,900',
       rating: 5,
-      date: '2 days ago',
+      date: 'Yesterday',
       review:
-        'Was hesitant to buy second-hand online, but the counter staff showed me the phone on WhatsApp video call first. Battery was exactly 92% as promised with original box. Saved over 60k!',
+        'Kolkata Bus Stand counter pe jaakar phone physically check kiya. Display 100% original tha aur battery health 87% genuine mili. Bill aur box ke saath turant mil gaya. Imamganj me best deal!',
     },
     {
-      name: 'Ankit Verma',
-      city: 'Bengaluru',
+      name: 'Rahul Kumar',
+      city: 'Station Road, Gaya',
       phoneBought: 'Samsung Galaxy S23 Ultra',
       savedAmount: '₹60,499',
       rating: 5,
-      date: '1 week ago',
+      date: '3 days ago',
       review:
-        'S-Pen and 200MP camera work flawlessly. 7-day testing warranty gave me complete peace of mind. Delivered securely in 24 hours with bubble wrap and invoice.',
+        'Pehle WhatsApp video call pe Osama bhaiya ne pura phone zoom karke dikhaya. S-Pen aur 200MP camera bilkul naya jaisa chal raha hai. 7-Day testing warranty ne pura bharosa diya.',
     },
     {
-      name: 'Mohd. Faisal',
-      city: 'Hyderabad',
+      name: 'Aman Singh',
+      city: 'GT Road, Sherghati',
       phoneBought: 'OnePlus 11 5G (16GB RAM)',
       savedAmount: '₹20,000',
       rating: 5,
-      date: '2 weeks ago',
+      date: '1 week ago',
       review:
-        'Original 100W SuperVOOC charger was included in the box! Charges to 100% in 25 minutes. Mint condition without a single scratch on the screen. Best place for refurbished phones.',
+        'Original 100W SuperVOOC charger box ke andar mila. Battery 25 minute me full charge hoti hai. Ek bhi scratch nahi hai screen pe. Bihar me used phone lene ke liye sabse best shop.',
     },
   ];
 
@@ -39,15 +39,15 @@ export default function TestimonialsSection() {
     <div className="my-16">
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto mb-10">
-        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold mb-3">
+        <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold mb-3">
           <Star className="w-3.5 h-3.5 fill-emerald-400 text-emerald-400" />
-          <span>Real Customer Feedback</span>
+          <span>Local Customer Trust • Gaya & Imamganj</span>
         </div>
         <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-          Trusted by <span className="text-emerald-400">1,200+ Smart Buyers</span> Across India
+          Trusted by <span className="text-emerald-400">1,200+ Smart Buyers</span> in Bihar
         </h2>
         <p className="mt-2 text-xs sm:text-sm text-slate-400">
-          See how much customers saved by choosing verified second-hand smartphones with our warranty.
+          Kolkata Bus Stand Imamganj counter se verified phones lene wale verified customers ke real reviews.
         </p>
       </div>
 

@@ -11,8 +11,13 @@ import {
   ArrowRight,
 } from 'lucide-react';
 
-export default function QualityInspectorSection() {
-  const whatsappNumber = process.env.NEXT_PUBLIC_STORE_WHATSAPP_NUMBER || '919876543210';
+interface QualityInspectorSectionProps {
+  whatsappNumber?: string;
+}
+
+export default function QualityInspectorSection({
+  whatsappNumber = process.env.NEXT_PUBLIC_STORE_WHATSAPP_NUMBER || '919102609396',
+}: QualityInspectorSectionProps) {
   const videoInspectUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
     'Hi! I want to request a live WhatsApp video call to inspect the phone before making a purchase.'
   )}`;

@@ -10,6 +10,8 @@ import {
   Tag,
   ArrowUpDown,
   Filter,
+  Flame,
+  MessageCircle,
 } from 'lucide-react';
 import { MobileItem } from '@/lib/sanity.client';
 import MobileCard from './MobileCard';
@@ -30,21 +32,27 @@ const BRANDS = [
 
 const BUDGET_RANGES = [
   { label: 'All Budgets', min: 0, max: Infinity },
-  { label: 'Under ₹35,000', min: 0, max: 35000 },
+  { label: 'Under ₹20,000', min: 0, max: 20000 },
+  { label: '₹20k - ₹35k', min: 20000, max: 35000 },
   { label: '₹35k - ₹50k', min: 35000, max: 50000 },
   { label: 'Above ₹50,000', min: 50000, max: Infinity },
 ];
 
-const POPULAR_TAGS = ['iPhone', 'Galaxy S23', 'OnePlus 11', 'Pixel', '128GB', '256GB'];
+const POPULAR_TAGS = ['iPhone', 'Galaxy S23', 'OnePlus', 'Vivo', 'Realme', '5G', '128GB', '256GB'];
 
 interface CatalogViewProps {
   initialMobiles: MobileItem[];
+  whatsappNumber?: string;
 }
 
-export default function CatalogView({ initialMobiles }: CatalogViewProps) {
+export default function CatalogView({
+  initialMobiles,
+  whatsappNumber = '919102609396',
+}: CatalogViewProps) {
   const [selectedBrand, setSelectedBrand] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [onlyInStock, setOnlyInStock] = useState(false);
+  const [onlyUrgentSales, setOnlyUrgentSales] = useState(false);
   const [selectedBudgetIndex, setSelectedBudgetIndex] = useState(0);
   const [selectedCondition, setSelectedCondition] = useState('All');
   const [sortBy, setSortBy] = useState<'latest' | 'price-asc' | 'price-desc'>('latest');
@@ -91,6 +99,11 @@ export default function CatalogView({ initialMobiles }: CatalogViewProps) {
           return false;
         }
 
+        // Urgent Deals filter
+        if (onlyUrgentSales && !item.isUrgentSale) {
+          return false;
+        }
+
         // Search query
         if (searchQuery.trim()) {
           const q = searchQuery.toLowerCase();
@@ -120,6 +133,7 @@ export default function CatalogView({ initialMobiles }: CatalogViewProps) {
     selectedCondition,
     searchQuery,
     onlyInStock,
+    onlyUrgentSales,
     sortBy,
   ]);
 
@@ -138,6 +152,7 @@ export default function CatalogView({ initialMobiles }: CatalogViewProps) {
     setSelectedCondition('All');
     setSearchQuery('');
     setOnlyInStock(false);
+    setOnlyUrgentSales(false);
     setSortBy('latest');
   };
 
@@ -146,7 +161,8 @@ export default function CatalogView({ initialMobiles }: CatalogViewProps) {
     (selectedBudgetIndex !== 0 ? 1 : 0) +
     (selectedCondition !== 'All' ? 1 : 0) +
     (searchQuery ? 1 : 0) +
-    (onlyInStock ? 1 : 0);
+    (onlyInStock ? 1 : 0) +
+    (onlyUrgentSales ? 1 : 0);
 
   return (
     <div id="catalog-section">
@@ -180,7 +196,7 @@ export default function CatalogView({ initialMobiles }: CatalogViewProps) {
           <div className="flex items-center flex-wrap gap-3">
             <button
               onClick={() => setOnlyInStock(!onlyInStock)}
-              className={`inline-flex items-center space-x-2 px-4 py-3 rounded-2xl text-xs font-bold border transition-all ${
+              className={`inline-flex items-center space-x-2 px-3.5 py-3 rounded-2xl text-xs font-bold border transition-all ${
                 onlyInStock
                   ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50'
                   : 'bg-slate-950/60 hover:bg-slate-800 text-slate-300 border-slate-800'
@@ -196,6 +212,23 @@ export default function CatalogView({ initialMobiles }: CatalogViewProps) {
                 {onlyInStock && <Check className="w-3 h-3" />}
               </div>
               <span>In Stock Only</span>
+            </button>
+
+            {/* Urgent Deals Filter Toggle */}
+            <button
+              onClick={() => setOnlyUrgentSales(!onlyUrgentSales)}
+              className={`inline-flex items-center space-x-1.5 px-3.5 py-3 rounded-2xl text-xs font-bold border transition-all ${
+                onlyUrgentSales
+                  ? 'bg-gradient-to-r from-amber-500/30 to-rose-500/30 text-amber-200 border-amber-500/60 shadow-lg shadow-amber-500/20'
+                  : 'bg-slate-950/60 hover:bg-slate-800 text-slate-300 border-slate-800'
+              }`}
+            >
+              <Flame
+                className={`w-4 h-4 ${
+                  onlyUrgentSales ? 'text-amber-400 fill-amber-400 animate-pulse' : 'text-slate-400'
+                }`}
+              />
+              <span>🔥 Urgent Deals</span>
             </button>
 
             <div className="flex items-center space-x-2">
@@ -326,21 +359,41 @@ export default function CatalogView({ initialMobiles }: CatalogViewProps) {
         </div>
       ) : (
         /* Empty State */
-        <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-12 text-center max-w-lg mx-auto shadow-2xl my-12">
+        <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-8 sm:p-12 text-center max-w-lg mx-auto shadow-2xl my-12">
           <div className="w-16 h-16 rounded-2xl bg-slate-800/60 flex items-center justify-center mx-auto mb-4 text-emerald-400">
             <Search className="w-8 h-8" />
           </div>
-          <h3 className="text-lg font-black text-white mb-2">No Phones Match Your Filters</h3>
+          <h3 className="text-lg font-black text-white mb-2">
+            {searchQuery ? `"${searchQuery}" Not in Current Stock` : 'No Phones Match Your Filters'}
+          </h3>
           <p className="text-xs sm:text-sm text-slate-400 mb-6 leading-relaxed">
-            We couldn't find any phone matching your exact budget and search criteria.
-            Try clearing filters or search for another model.
+            {searchQuery
+              ? `Humare pass yeh model abhi display pe nahi hai, lekin Osama bhaiya aapke liye 24 se 48 ghante me arrange karwa sakte hain!`
+              : "We couldn't find any phone matching your exact budget and search criteria. Try clearing filters or tell us what phone you need."}
           </p>
-          <button
-            onClick={resetFilters}
-            className="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-colors shadow-lg shadow-emerald-600/20"
-          >
-            Clear All Filters & Show All
-          </button>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <button
+              onClick={resetFilters}
+              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs transition-colors border border-slate-700"
+            >
+              Clear All Filters & Show All
+            </button>
+
+            {searchQuery && (
+              <a
+                href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+                  `Hi Osama! I was looking for "${searchQuery}" on your Second Hand Mobile Hub website. Can you check if it is available or arrange it for me?`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-6 py-3 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-black text-xs shadow-lg shadow-emerald-600/30 transition-all"
+              >
+                <MessageCircle className="w-4 h-4 fill-white text-transparent" />
+                <span>Ask Osama on WhatsApp</span>
+              </a>
+            )}
+          </div>
         </div>
       )}
 
@@ -350,6 +403,7 @@ export default function CatalogView({ initialMobiles }: CatalogViewProps) {
         isOpen={isGalleryOpen}
         onClose={handleCloseGallery}
         initialIndex={galleryIndex}
+        whatsappNumber={whatsappNumber}
       />
     </div>
   );

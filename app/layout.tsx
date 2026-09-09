@@ -6,10 +6,11 @@ import FloatingWhatsApp from '@/components/FloatingWhatsApp';
 import { getSiteSettings } from '@/lib/sanity.client';
 
 export const metadata: Metadata = {
-  title: 'SECOND HAND MOBILE HUB IMAMGANJ | Certified Refurbished & Used Smartphones',
+  title: 'OSAMA MOBILE | Second Hand Mobile Hub Imamganj (Gaya, Bihar)',
   description:
-    'Kolkata bus stand Imamganj (Gaya, Bihar). 100% verified, inspected, second-hand smartphones with battery health check, original accessories, and real-time prices.',
+    'Osama Mobile - Kolkata Bus Stand Imamganj (Gaya, Bihar). 100% verified, inspected, second-hand smartphones with battery health check, original accessories, and real-time prices.',
   keywords: [
+    'osama mobile imamganj',
     'second hand mobile imamganj',
     'used phones gaya bihar',
     'refurbished iphone bihar',
@@ -18,9 +19,9 @@ export const metadata: Metadata = {
     'buy used phone on whatsapp',
   ],
   openGraph: {
-    title: 'SECOND HAND MOBILE HUB IMAMGANJ | Quality Refurbished Smartphones',
+    title: 'OSAMA MOBILE | Second Hand Mobile Hub Imamganj',
     description:
-      'Buy certified used smartphones with genuine battery health and 7-day warranty in Imamganj, Gaya. Instant WhatsApp deal.',
+      'Buy certified used smartphones with genuine battery health and 7-day warranty at Kolkata Bus Stand, Imamganj, Gaya. Instant WhatsApp deal.',
     type: 'website',
   },
 };

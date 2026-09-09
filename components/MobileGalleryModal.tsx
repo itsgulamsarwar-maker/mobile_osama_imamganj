@@ -11,6 +11,7 @@ interface MobileGalleryModalProps {
   isOpen: boolean;
   onClose: () => void;
   initialIndex?: number;
+  whatsappNumber?: string;
 }
 
 export default function MobileGalleryModal({
@@ -18,6 +19,7 @@ export default function MobileGalleryModal({
   isOpen,
   onClose,
   initialIndex = 0,
+  whatsappNumber = process.env.NEXT_PUBLIC_STORE_WHATSAPP_NUMBER || '919102609396',
 }: MobileGalleryModalProps) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
@@ -63,7 +65,6 @@ export default function MobileGalleryModal({
   if (!isOpen || !mobile) return null;
 
   const currentImgSrc = getImageSrc(images[currentIndex]);
-  const whatsappNumber = process.env.NEXT_PUBLIC_STORE_WHATSAPP_NUMBER || '919876543210';
   const whatsappMessage = encodeURIComponent(
     `Hello! I'm viewing the gallery of *${mobile.title} (${mobile.variant})* priced at *₹${mobile.price.toLocaleString('en-IN')}*. Is it still in stock?`
   );
