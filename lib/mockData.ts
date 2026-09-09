@@ -26,6 +26,7 @@ export const mockMobiles: MobileItem[] = [
     brand: 'Samsung',
     price: 64500,
     originalPrice: 124999,
+    isUrgentSale: true,
     variant: '256GB / 12GB RAM',
     condition: 'Like New (10/10)',
     batteryHealth: '96%',

@@ -9,7 +9,7 @@ export const mobile = defineType({
       name: 'title',
       title: 'Phone Model / Title',
       type: 'string',
-      description: 'e.g., iPhone 13 Pro Max or Samsung Galaxy S23 Ultra',
+      description: 'e.g., iPhone 14 Pro Max or Samsung Galaxy S23 Ultra',
       validation: (Rule) => Rule.required().error('Title is required'),
     }),
     defineField({
@@ -45,6 +45,13 @@ export const mobile = defineType({
       type: 'number',
       description: 'Original launch price or MRP for showing discount (optional)',
       validation: (Rule) => Rule.positive(),
+    }),
+    defineField({
+      name: 'isUrgentSale',
+      title: '🔥 Urgent Selling / Hot Deal Badge?',
+      type: 'boolean',
+      description: 'Toggle ON to show a glowing "🔥 URGENT SALE" badge on this phone card for fast clearance',
+      initialValue: false,
     }),
     defineField({
       name: 'variant',
@@ -134,10 +141,12 @@ export const mobile = defineType({
       variant: 'variant',
       media: 'images.0',
       isSold: 'isSold',
+      isUrgent: 'isUrgentSale',
     },
-    prepare({ title, subtitle, variant, media, isSold }) {
+    prepare({ title, subtitle, variant, media, isSold, isUrgent }) {
+      const status = isSold ? '❌ [SOLD OUT]' : isUrgent ? '🔥 [URGENT SALE]' : '✅ [IN STOCK]';
       return {
-        title: `${title} ${isSold ? '❌ [SOLD OUT]' : '✅ [IN STOCK]'}`,
+        title: `${title} ${status}`,
         subtitle: `₹${subtitle ? subtitle.toLocaleString('en-IN') : 'N/A'} • ${variant || ''}`,
         media,
       };

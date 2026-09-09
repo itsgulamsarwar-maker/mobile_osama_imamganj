@@ -14,6 +14,7 @@ import {
   Receipt,
   Zap,
   BellRing,
+  Flame,
 } from 'lucide-react';
 import { MobileItem } from '@/lib/sanity.client';
 import { getImageSrc } from '@/lib/sanity.image';
@@ -29,6 +30,7 @@ export default function MobileCard({ mobile, onOpenGallery }: MobileCardProps) {
     brand,
     price,
     originalPrice,
+    isUrgentSale = false,
     variant,
     condition,
     batteryHealth,
@@ -50,11 +52,13 @@ export default function MobileCard({ mobile, onOpenGallery }: MobileCardProps) {
     originalPrice && originalPrice > price ? originalPrice - price : null;
 
   // Pre-filled WhatsApp URLs
-  const storePhone = process.env.NEXT_PUBLIC_STORE_WHATSAPP_NUMBER || '919876543210';
+  const storePhone = process.env.NEXT_PUBLIC_STORE_WHATSAPP_NUMBER || '919102609396';
   const whatsappQuery = encodeURIComponent(
     `Hello! I am interested in buying *${title}* (${variant}) listed for *₹${price.toLocaleString(
       'en-IN'
-    )}* [Condition: ${condition}, Battery: ${batteryHealth || 'N/A'}]. Is this still available?`
+    )}* [Condition: ${condition}, Battery: ${batteryHealth || 'N/A'}${
+      isUrgentSale ? ' - Urgent Sale Offer' : ''
+    }]. Is this still available?`
   );
   const whatsappUrl = `https://wa.me/${storePhone}?text=${whatsappQuery}`;
 
@@ -96,6 +100,8 @@ export default function MobileCard({ mobile, onOpenGallery }: MobileCardProps) {
       className={`group relative flex flex-col bg-slate-900/80 border rounded-3xl transition-all duration-300 overflow-hidden ${
         isSold
           ? 'border-slate-800 opacity-80'
+          : isUrgentSale
+          ? 'border-amber-500/50 shadow-lg shadow-amber-500/10 hover:border-amber-400 hover:shadow-glow-emerald hover:-translate-y-1'
           : 'border-slate-800/90 hover:border-emerald-500/40 hover:shadow-glow-emerald hover:-translate-y-1'
       }`}
     >
@@ -122,10 +128,16 @@ export default function MobileCard({ mobile, onOpenGallery }: MobileCardProps) {
         )}
 
         {/* Brand Tag (Top Left) */}
-        <div className="absolute top-3.5 left-3.5 z-10">
+        <div className="absolute top-3.5 left-3.5 z-10 flex items-center space-x-1.5">
           <span className="px-3 py-1 text-xs font-black rounded-xl bg-slate-950/90 backdrop-blur-md text-white tracking-wider uppercase border border-slate-700/80">
             {brand}
           </span>
+          {isUrgentSale && !isSold && (
+            <span className="px-2.5 py-1 text-[10px] font-black rounded-xl bg-gradient-to-r from-amber-500 to-rose-600 text-white tracking-wider uppercase shadow-lg shadow-rose-500/30 flex items-center animate-pulse">
+              <Flame className="w-3 h-3 mr-1 fill-white" />
+              Urgent Sale
+            </span>
+          )}
         </div>
 
         {/* Gallery count trigger (Top Right) */}
@@ -261,10 +273,16 @@ export default function MobileCard({ mobile, onOpenGallery }: MobileCardProps) {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full flex items-center justify-center space-x-2 py-3 px-4 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] active:bg-[#16a34a] text-white font-black text-xs sm:text-sm shadow-lg shadow-emerald-500/20 transition-all transform active:scale-[0.99]"
+                className={`w-full flex items-center justify-center space-x-2 py-3 px-4 rounded-xl text-white font-black text-xs sm:text-sm shadow-lg transition-all transform active:scale-[0.99] ${
+                  isUrgentSale
+                    ? 'bg-gradient-to-r from-amber-500 via-orange-500 to-rose-600 hover:from-amber-400 hover:to-rose-500 shadow-amber-500/25'
+                    : 'bg-[#25D366] hover:bg-[#1EBE5D] active:bg-[#16a34a] shadow-emerald-500/20'
+                }`}
               >
                 <MessageCircle className="w-4 h-4 fill-white text-transparent" />
-                <span>Chat on WhatsApp to Buy</span>
+                <span>
+                  {isUrgentSale ? 'Claim Urgent Deal on WhatsApp' : 'Chat on WhatsApp to Buy'}
+                </span>
               </a>
             )}
 

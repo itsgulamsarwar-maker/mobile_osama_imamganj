@@ -2,7 +2,7 @@ import { defineType, defineField } from 'sanity';
 
 export const siteSettings = defineType({
   name: 'siteSettings',
-  title: 'Store Settings (Name, Logo, Address, Contact)',
+  title: 'Store Settings (Name, Logo, Address, Offers)',
   type: 'document',
   fields: [
     defineField({
@@ -24,16 +24,55 @@ export const siteSettings = defineType({
       name: 'logo',
       title: 'Store Logo Image',
       type: 'image',
-      description: 'Upload your shop logo (optional - uses default modern icon if empty)',
+      description: 'Upload your shop logo (optional)',
       options: {
         hotspot: true,
       },
     }),
+
+    // --- URGENT SELLING / DISCOUNT PROMO BANNER ---
+    defineField({
+      name: 'showPromoBanner',
+      title: 'Show Urgent Selling / Special Offer Banner?',
+      type: 'boolean',
+      description: 'Toggle ON when a discount, urgent sale, or festival offer is active',
+      initialValue: true,
+    }),
+    defineField({
+      name: 'promoTag',
+      title: 'Promo Badge Tag',
+      type: 'string',
+      description: 'e.g., 🔥 URGENT SELLING OFFER or ⚡ FLASH DISCOUNT',
+      initialValue: '🔥 URGENT SELLING OFFER',
+    }),
+    defineField({
+      name: 'promoTitle',
+      title: 'Promo Offer Headline',
+      type: 'string',
+      description: 'e.g., Flat ₹2,000 Extra Off on all iPhones & Galaxy S23 this week!',
+      initialValue: 'Flat ₹2,000 Extra Off on all 5G Phones This Week!',
+    }),
+    defineField({
+      name: 'promoDescription',
+      title: 'Promo Offer Description',
+      type: 'text',
+      rows: 2,
+      description: 'e.g., Free 20W Fast Charger + Original Back Cover included with every phone. First come, first served at Imamganj counter.',
+      initialValue:
+        'Free 20W Fast Charger + Original Back Cover with every purchase. Limited stock available at Kolkata Bus Stand, Imamganj counter.',
+    }),
+    defineField({
+      name: 'promoButtonText',
+      title: 'Promo WhatsApp Button Text',
+      type: 'string',
+      initialValue: 'Claim Offer on WhatsApp',
+    }),
+
+    // --- CONTACT & DETAILS ---
     defineField({
       name: 'phone',
       title: 'Calling Phone Number',
       type: 'string',
-      description: 'e.g., +91 9102609396',
       initialValue: '+91 9102609396',
       validation: (Rule) => Rule.required(),
     }),
@@ -49,7 +88,6 @@ export const siteSettings = defineType({
       name: 'address',
       title: 'Shop Physical Address',
       type: 'string',
-      description: 'e.g., Kolkata Bus Stand, Imamganj, Gaya, Bihar',
       initialValue: 'Kolkata Bus Stand, Imamganj, Gaya, Bihar',
       validation: (Rule) => Rule.required(),
     }),
@@ -57,28 +95,24 @@ export const siteSettings = defineType({
       name: 'instagramUrl',
       title: 'Instagram Profile URL',
       type: 'url',
-      description: 'e.g., https://www.instagram.com/second_hand_mobile_hub1',
       initialValue: 'https://www.instagram.com/second_hand_mobile_hub1',
     }),
     defineField({
       name: 'instagramHandle',
       title: 'Instagram Handle',
       type: 'string',
-      description: 'e.g., @second_hand_mobile_hub1',
       initialValue: '@second_hand_mobile_hub1',
     }),
     defineField({
       name: 'announcement',
       title: 'Top Bar Announcement Notice',
       type: 'string',
-      description: 'Text shown at the very top of the website',
       initialValue: 'Imamganj Retail Counter Open • 32-Point Quality Inspected • 7-Day Testing Guarantee',
     }),
     defineField({
       name: 'openingHours',
       title: 'Store Timings',
       type: 'string',
-      description: 'e.g., Monday - Saturday: 10:00 AM - 9:00 PM | Sunday: 11:00 AM - 7:00 PM',
       initialValue: 'Monday - Saturday: 10:00 AM - 9:00 PM | Sunday: 11:00 AM - 7:00 PM',
     }),
   ],

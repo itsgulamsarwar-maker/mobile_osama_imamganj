@@ -11,6 +11,7 @@ import CatalogView from '@/components/CatalogView';
 import QualityInspectorSection from '@/components/QualityInspectorSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import FAQSection from '@/components/FAQSection';
+import UrgentOfferBanner from '@/components/UrgentOfferBanner';
 import {
   Sparkles,
   ShieldCheck,
@@ -23,6 +24,7 @@ import {
   Star,
   Instagram,
   MapPin,
+  Flame,
 } from 'lucide-react';
 
 export const revalidate = 0;
@@ -135,8 +137,12 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Main Catalog Section */}
+      {/* Main Container */}
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        {/* Urgent Selling / Special Offer Banner */}
+        <UrgentOfferBanner settings={settings} />
+
+        {/* Catalog Section */}
         <CatalogView initialMobiles={mobiles} />
 
         {/* 32-Point Quality Inspector Breakdown */}
