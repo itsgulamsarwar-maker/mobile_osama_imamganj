@@ -13,18 +13,15 @@ import TestimonialsSection from '@/components/TestimonialsSection';
 import FAQSection from '@/components/FAQSection';
 import UrgentOfferBanner from '@/components/UrgentOfferBanner';
 import {
-  Sparkles,
   ShieldCheck,
-  CheckCircle,
   Zap,
   ArrowDown,
   PhoneCall,
   Video,
-  Award,
-  Star,
   Instagram,
   MapPin,
   Flame,
+  CheckCircle,
 } from 'lucide-react';
 
 export const revalidate = 0;
@@ -50,63 +47,61 @@ export default async function HomePage() {
     settings.instagramUrl || 'https://www.instagram.com/second_hand_mobile_hub1';
 
   const generalWhatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    `Hi! I am browsing ${settings.storeName} and looking for a phone recommendation.`
+    `Hi Osama! I am browsing your website and looking for a phone recommendation.`
   )}`;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
+    <div className="min-h-screen bg-[#080c14] text-slate-100">
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-12 pb-24 sm:pt-20 sm:pb-32">
-        {/* Background glow effects */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/10 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute top-10 right-10 w-96 h-96 bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none" />
-        <div className="absolute bottom-10 left-10 w-80 h-80 bg-teal-500/10 rounded-full blur-[90px] pointer-events-none" />
+      <section className="relative overflow-hidden pt-5 pb-6 sm:pt-12 sm:pb-12 border-b border-white/[0.05]">
+        {/* Subtle Ambient Light Mesh */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[350px] bg-emerald-500/[0.07] rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute top-10 right-0 w-72 h-72 bg-cyan-500/[0.06] rounded-full blur-[90px] pointer-events-none" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          {/* Top Pill with Location */}
-          <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-emerald-950/80 border border-emerald-500/30 text-emerald-300 text-xs font-bold mb-6 backdrop-blur-md shadow-lg shadow-emerald-950/50">
-            <MapPin className="w-3.5 h-3.5 text-emerald-400" />
+          {/* Location Badge */}
+          <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-slate-300 text-xs font-semibold mb-4 backdrop-blur-md">
+            <MapPin className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
             <span>{settings.address}</span>
           </div>
 
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight max-w-5xl mx-auto leading-[1.1] sm:leading-none">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight max-w-4xl mx-auto leading-tight sm:leading-none">
             Flagship Smartphones.{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-300">
               Honest Prices.
             </span>
           </h1>
 
-          <p className="mt-6 text-sm sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            Welcome to <strong className="text-white">{settings.storeName}</strong>.
-            Every phone undergoes our certified 32-point inspection with genuine battery health,
-            authentic box & accessories, and a 7-day testing warranty.
+          <p className="mt-3 text-xs sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
+            Welcome to <strong className="text-white font-bold">{settings.storeName}</strong>.
+            Verified battery health, original accessories, and a 7-day testing warranty on every device.
           </p>
 
-          {/* Quick CTA Buttons */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+          {/* Quick Actions Bar */}
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
             <a
               href="#catalog-section"
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-7 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-sm shadow-xl shadow-emerald-600/25 transition-all transform hover:scale-105 active:scale-95"
+              className="inline-flex items-center justify-center space-x-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs sm:text-sm shadow-lg shadow-emerald-600/25 transition-all active:scale-95"
             >
-              <span>Explore Verified Stock</span>
-              <ArrowDown className="w-4 h-4" />
+              <span>Explore Stock</span>
+              <ArrowDown className="w-3.5 h-3.5" />
             </a>
 
             <a
               href={generalWhatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-7 py-3.5 rounded-2xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-black text-sm shadow-lg shadow-emerald-500/20 transition-all transform hover:scale-105 active:scale-95"
+              className="inline-flex items-center justify-center space-x-2 px-5 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-black text-xs sm:text-sm shadow-lg shadow-emerald-500/20 transition-all active:scale-95"
             >
               <Video className="w-4 h-4 fill-white text-transparent" />
-              <span>WhatsApp Video Call</span>
+              <span>Video Inspection</span>
             </a>
 
             <a
               href={`tel:${settings.phone.replace(/\s+/g, '')}`}
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-6 py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-200 hover:text-white border border-slate-700/80 font-bold text-sm transition-all"
+              className="inline-flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.09] text-slate-200 border border-white/[0.08] font-bold text-xs sm:text-sm transition-all active:scale-95"
             >
-              <PhoneCall className="w-4 h-4 text-emerald-400" />
+              <PhoneCall className="w-3.5 h-3.5 text-emerald-400" />
               <span>Call: {settings.phone}</span>
             </a>
 
@@ -116,50 +111,38 @@ export default async function HomePage() {
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-6 py-3.5 rounded-2xl bg-slate-900 hover:bg-slate-800 text-slate-200 hover:text-white border border-slate-700/80 font-bold text-sm transition-all"
+              className="inline-flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.09] text-slate-200 border border-white/[0.08] font-bold text-xs sm:text-sm transition-all active:scale-95"
             >
-              <MapPin className="w-4 h-4 text-cyan-400" />
-              <span>Get Directions</span>
-            </a>
-
-            <a
-              href={instagramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-pink-600/20 via-purple-600/20 to-amber-600/20 hover:from-pink-600/30 hover:to-purple-600/30 border border-pink-500/40 text-pink-300 hover:text-white font-bold text-sm transition-all"
-            >
-              <Instagram className="w-4 h-4 text-pink-400" />
-              <span>Instagram</span>
+              <MapPin className="w-3.5 h-3.5 text-cyan-400" />
+              <span>Directions</span>
             </a>
           </div>
 
-          {/* Stats Bar */}
-          <div className="mt-14 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-            <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md">
-              <span className="block text-2xl sm:text-3xl font-black text-white">500+</span>
-              <span className="text-xs text-slate-400 font-medium">Phones Sold in Bihar</span>
+          {/* Micro Stats Row */}
+          <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-2.5 max-w-3xl mx-auto">
+            <div className="p-2.5 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
+              <span className="block text-lg sm:text-2xl font-black text-white">500+</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 font-medium">Phones Sold in Bihar</span>
             </div>
-            <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md">
-              <span className="block text-2xl sm:text-3xl font-black text-emerald-400">32-Point</span>
-              <span className="text-xs text-slate-400 font-medium">Certified Inspection</span>
+            <div className="p-2.5 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
+              <span className="block text-lg sm:text-2xl font-black text-emerald-400">32-Point</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 font-medium">Inspection Check</span>
             </div>
-            <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md">
-              <span className="block text-2xl sm:text-3xl font-black text-cyan-400">7 Days</span>
-              <span className="text-xs text-slate-400 font-medium">Testing Warranty</span>
+            <div className="p-2.5 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
+              <span className="block text-lg sm:text-2xl font-black text-cyan-400">7 Days</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 font-medium">Testing Guarantee</span>
             </div>
-            <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800/80 backdrop-blur-md">
-              <span className="block text-2xl sm:text-3xl font-black text-pink-400 flex items-center justify-center">
-                1,200+
-              </span>
-              <span className="text-xs text-slate-400 font-medium">Instagram Followers</span>
+            <div className="p-2.5 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
+              <span className="block text-lg sm:text-2xl font-black text-pink-400">1,200+</span>
+              <span className="text-[10px] sm:text-xs text-slate-400 font-medium">Instagram Family</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Main Container */}
-      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-        {/* Urgent Selling / Special Offer Banner */}
+      {/* Main Content Container */}
+      <div className="relative max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-8">
+        {/* Urgent Promo Offer */}
         <UrgentOfferBanner settings={settings} />
 
         {/* Catalog Section */}
@@ -169,21 +152,20 @@ export default async function HomePage() {
         <QualityInspectorSection whatsappNumber={whatsappNumber} />
 
         {/* Instagram Follow Callout Banner */}
-        <div className="my-12 bg-gradient-to-r from-pink-950/40 via-slate-900 to-purple-950/40 border border-pink-500/30 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-2xl">
-          <div className="flex items-center space-x-4">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-pink-500 to-amber-500 flex items-center justify-center text-white shrink-0 shadow-lg shadow-pink-500/20">
-              <Instagram className="w-7 h-7" />
+        <div className="my-8 bg-gradient-to-r from-pink-950/20 via-white/[0.02] to-purple-950/20 border border-pink-500/25 rounded-3xl p-5 sm:p-7 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
+          <div className="flex items-center space-x-3.5">
+            <div className="w-11 h-11 sm:w-13 sm:h-13 rounded-2xl bg-gradient-to-tr from-pink-500 to-amber-500 flex items-center justify-center text-white shrink-0 shadow-lg shadow-pink-500/20">
+              <Instagram className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
             <div>
-              <h3 className="text-lg sm:text-xl font-bold text-white">
-                Follow Us on Instagram for Daily Unboxing & Deals!
+              <h3 className="text-sm sm:text-base font-bold text-white">
+                Follow Us on Instagram for Daily Unboxing
               </h3>
-              <p className="text-xs sm:text-sm text-slate-300 mt-1">
-                Watch real testing videos and new stock arrivals on{' '}
+              <p className="text-xs text-slate-400 mt-0.5">
+                Watch real testing videos on{' '}
                 <strong className="text-pink-400">
                   {settings.instagramHandle || '@second_hand_mobile_hub1'}
-                </strong>{' '}
-                (1,228+ Followers).
+                </strong>
               </p>
             </div>
           </div>
@@ -192,7 +174,7 @@ export default async function HomePage() {
             href={instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center space-x-2 px-6 py-3 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-pink-600/30 transition-all transform hover:scale-105"
+            className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center space-x-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-bold text-xs transition-all active:scale-95 shadow-md shadow-pink-600/20"
           >
             <Instagram className="w-4 h-4" />
             <span>Open Instagram Profile</span>
@@ -204,7 +186,7 @@ export default async function HomePage() {
 
         {/* FAQ Accordion */}
         <FAQSection whatsappNumber={whatsappNumber} />
-      </section>
+      </div>
     </div>
   );
 }

@@ -3,42 +3,39 @@
 import React, { useState, useMemo } from 'react';
 import {
   Search,
-  SlidersHorizontal,
-  RefreshCcw,
   Sparkles,
   Check,
   Tag,
   ArrowUpDown,
-  Filter,
   Flame,
   MessageCircle,
+  X,
+  SlidersHorizontal,
+  RotateCcw,
 } from 'lucide-react';
 import { MobileItem } from '@/lib/sanity.client';
 import MobileCard from './MobileCard';
 import MobileGalleryModal from './MobileGalleryModal';
 
-const BRANDS = [
-  'All',
-  'Apple',
-  'Samsung',
-  'OnePlus',
-  'Xiaomi',
-  'Vivo',
-  'Oppo',
-  'Realme',
-  'Google',
-  'Other',
+const BRAND_LIST = [
+  { name: 'All', icon: '⚡' },
+  { name: 'Apple', icon: '🍎' },
+  { name: 'Samsung', icon: '📱' },
+  { name: 'OnePlus', icon: '🔴' },
+  { name: 'Vivo', icon: '✨' },
+  { name: 'Realme', icon: '🟡' },
+  { name: 'Xiaomi', icon: '🟠' },
+  { name: 'Google', icon: '🔍' },
+  { name: 'Other', icon: '📦' },
 ];
 
-const BUDGET_RANGES = [
+const BUDGET_FILTERS = [
   { label: 'All Budgets', min: 0, max: Infinity },
   { label: 'Under ₹20,000', min: 0, max: 20000 },
   { label: '₹20k - ₹35k', min: 20000, max: 35000 },
   { label: '₹35k - ₹50k', min: 35000, max: 50000 },
-  { label: 'Above ₹50,000', min: 50000, max: Infinity },
+  { label: 'Flagship ₹50k+', min: 50000, max: Infinity },
 ];
-
-const POPULAR_TAGS = ['iPhone', 'Galaxy S23', 'OnePlus', 'Vivo', 'Realme', '5G', '128GB', '256GB'];
 
 interface CatalogViewProps {
   initialMobiles: MobileItem[];
@@ -54,7 +51,6 @@ export default function CatalogView({
   const [onlyInStock, setOnlyInStock] = useState(false);
   const [onlyUrgentSales, setOnlyUrgentSales] = useState(false);
   const [selectedBudgetIndex, setSelectedBudgetIndex] = useState(0);
-  const [selectedCondition, setSelectedCondition] = useState('All');
   const [sortBy, setSortBy] = useState<'latest' | 'price-asc' | 'price-desc'>('latest');
 
   // Modal Gallery state
@@ -73,9 +69,18 @@ export default function CatalogView({
     setGalleryMobile(null);
   };
 
+  // Brand item counts
+  const brandCounts = useMemo(() => {
+    const counts: Record<string, number> = { All: initialMobiles.length };
+    BRAND_LIST.slice(1).forEach((b) => {
+      counts[b.name] = initialMobiles.filter((m) => m.brand === b.name).length;
+    });
+    return counts;
+  }, [initialMobiles]);
+
   // Filter and sort logic
   const filteredMobiles = useMemo(() => {
-    const activeBudget = BUDGET_RANGES[selectedBudgetIndex];
+    const activeBudget = BUDGET_FILTERS[selectedBudgetIndex];
 
     return initialMobiles
       .filter((item) => {
@@ -86,11 +91,6 @@ export default function CatalogView({
 
         // Budget filter
         if (item.price < activeBudget.min || item.price > activeBudget.max) {
-          return false;
-        }
-
-        // Condition filter
-        if (selectedCondition !== 'All' && item.condition !== selectedCondition) {
           return false;
         }
 
@@ -130,225 +130,177 @@ export default function CatalogView({
     initialMobiles,
     selectedBrand,
     selectedBudgetIndex,
-    selectedCondition,
     searchQuery,
     onlyInStock,
     onlyUrgentSales,
     sortBy,
   ]);
 
-  // Brand item counts
-  const brandCounts = useMemo(() => {
-    const counts: Record<string, number> = { All: initialMobiles.length };
-    BRANDS.slice(1).forEach((b) => {
-      counts[b] = initialMobiles.filter((m) => m.brand === b).length;
-    });
-    return counts;
-  }, [initialMobiles]);
-
   const resetFilters = () => {
     setSelectedBrand('All');
     setSelectedBudgetIndex(0);
-    setSelectedCondition('All');
     setSearchQuery('');
     setOnlyInStock(false);
     setOnlyUrgentSales(false);
     setSortBy('latest');
   };
 
-  const activeFilterCount =
-    (selectedBrand !== 'All' ? 1 : 0) +
-    (selectedBudgetIndex !== 0 ? 1 : 0) +
-    (selectedCondition !== 'All' ? 1 : 0) +
-    (searchQuery ? 1 : 0) +
-    (onlyInStock ? 1 : 0) +
-    (onlyUrgentSales ? 1 : 0);
+  const isFilterActive =
+    selectedBrand !== 'All' ||
+    selectedBudgetIndex !== 0 ||
+    onlyInStock ||
+    onlyUrgentSales ||
+    searchQuery.trim().length > 0;
 
   return (
-    <div id="catalog-section">
-      {/* Filter Control Box */}
-      <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-5 sm:p-7 shadow-2xl mb-10 backdrop-blur-xl">
-        {/* Search Bar & Primary Toggles */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-5">
-          {/* Search Input */}
-          <div className="relative flex-1">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
-              <Search className="w-5 h-5 text-emerald-400" />
-            </div>
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by model (e.g. iPhone 14 Pro, Galaxy S23, 256GB)..."
-              className="w-full pl-12 pr-12 py-3.5 bg-slate-950/80 border border-slate-700/80 rounded-2xl text-sm font-semibold text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/80 focus:border-emerald-500 transition-all"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="absolute inset-y-0 right-0 pr-4 flex items-center text-xs font-bold text-slate-400 hover:text-white"
-              >
-                Clear
-              </button>
-            )}
+    <div id="catalog-section" className="scroll-mt-24">
+      {/* Modern App Search & Filter Header */}
+      <div className="space-y-3 mb-6">
+        {/* Search Bar */}
+        <div className="relative">
+          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+            <Search className="w-4 h-4 text-emerald-400" />
           </div>
-
-          {/* Controls: Stock Toggle & Sort */}
-          <div className="flex items-center flex-wrap gap-3">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search iPhone, Samsung, OnePlus, Vivo..."
+            className="w-full pl-10 pr-10 py-3 bg-white/[0.04] hover:bg-white/[0.06] focus:bg-white/[0.08] border border-white/[0.09] focus:border-emerald-500/60 rounded-2xl text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all shadow-inner"
+          />
+          {searchQuery && (
             <button
-              onClick={() => setOnlyInStock(!onlyInStock)}
-              className={`inline-flex items-center space-x-2 px-3.5 py-3 rounded-2xl text-xs font-bold border transition-all ${
-                onlyInStock
-                  ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50'
-                  : 'bg-slate-950/60 hover:bg-slate-800 text-slate-300 border-slate-800'
-              }`}
+              onClick={() => setSearchQuery('')}
+              className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-white transition-colors"
+              aria-label="Clear search"
             >
-              <div
-                className={`w-4 h-4 rounded flex items-center justify-center border ${
-                  onlyInStock
-                    ? 'bg-emerald-500 border-emerald-400 text-white'
-                    : 'border-slate-600'
-                }`}
-              >
-                {onlyInStock && <Check className="w-3 h-3" />}
-              </div>
-              <span>In Stock Only</span>
+              <X className="w-4 h-4" />
             </button>
-
-            {/* Urgent Deals Filter Toggle */}
-            <button
-              onClick={() => setOnlyUrgentSales(!onlyUrgentSales)}
-              className={`inline-flex items-center space-x-1.5 px-3.5 py-3 rounded-2xl text-xs font-bold border transition-all ${
-                onlyUrgentSales
-                  ? 'bg-gradient-to-r from-amber-500/30 to-rose-500/30 text-amber-200 border-amber-500/60 shadow-lg shadow-amber-500/20'
-                  : 'bg-slate-950/60 hover:bg-slate-800 text-slate-300 border-slate-800'
-              }`}
-            >
-              <Flame
-                className={`w-4 h-4 ${
-                  onlyUrgentSales ? 'text-amber-400 fill-amber-400 animate-pulse' : 'text-slate-400'
-                }`}
-              />
-              <span>🔥 Urgent Deals</span>
-            </button>
-
-            <div className="flex items-center space-x-2">
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as any)}
-                aria-label="Sort phones by price or newest"
-                className="bg-slate-950/80 border border-slate-700/80 text-slate-200 font-bold text-xs rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-500 cursor-pointer"
-              >
-                <option value="latest">Latest Stock</option>
-                <option value="price-asc">Price: Low to High</option>
-                <option value="price-desc">Price: High to Low</option>
-              </select>
-            </div>
-          </div>
+          )}
         </div>
 
-        {/* Quick Search Chips */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-4 scrollbar-thin text-xs text-slate-400">
-          <span className="shrink-0 text-[11px] font-bold text-slate-500 flex items-center">
-            <Tag className="w-3 h-3 mr-1" /> Quick:
-          </span>
-          {POPULAR_TAGS.map((tag) => (
-            <button
-              key={tag}
-              onClick={() => setSearchQuery(tag)}
-              className="px-2.5 py-1 rounded-lg bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-emerald-300 text-[11px] font-medium transition-colors shrink-0"
-            >
-              {tag}
-            </button>
-          ))}
-        </div>
-
-        {/* Brand Filter Tags */}
-        <div className="mb-4">
-          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-2">
-            Filter by Brand:
-          </span>
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin">
-            {BRANDS.map((brand) => {
-              const isSelected = selectedBrand === brand;
-              const count = brandCounts[brand] || 0;
-              return (
-                <button
-                  key={brand}
-                  onClick={() => setSelectedBrand(brand)}
-                  className={`flex items-center space-x-1.5 px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
-                    isSelected
-                      ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/30'
-                      : 'bg-slate-950/80 hover:bg-slate-800 text-slate-300 border border-slate-800'
-                  }`}
-                >
-                  <span>{brand}</span>
-                  <span
-                    className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                      isSelected
-                        ? 'bg-emerald-800 text-emerald-100'
-                        : 'bg-slate-800 text-slate-400'
-                    }`}
-                  >
-                    {count}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Budget Filter Chips */}
-        <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-slate-800/80">
-          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mr-2">
-            Budget:
-          </span>
-          {BUDGET_RANGES.map((budget, idx) => {
-            const isSelected = selectedBudgetIndex === idx;
+        {/* Brand Stories / Tabs Bar (Horizontal Swipe) */}
+        <div className="flex items-center space-x-2 overflow-x-auto no-scrollbar py-1">
+          {BRAND_LIST.map((brand) => {
+            const isSelected = selectedBrand === brand.name;
+            const count = brandCounts[brand.name] || 0;
             return (
               <button
-                key={idx}
-                onClick={() => setSelectedBudgetIndex(idx)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors ${
+                key={brand.name}
+                onClick={() => setSelectedBrand(brand.name)}
+                className={`flex items-center space-x-1.5 px-3.5 py-2 rounded-2xl text-xs font-bold whitespace-nowrap transition-all active:scale-95 ${
                   isSelected
-                    ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
-                    : 'bg-slate-950/60 hover:bg-slate-800 text-slate-400 border border-slate-800'
+                    ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/25'
+                    : 'bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 border border-white/[0.06]'
                 }`}
               >
-                {budget.label}
+                <span className="text-xs">{brand.icon}</span>
+                <span>{brand.name}</span>
+                <span
+                  className={`text-[10px] px-1.5 py-0.5 rounded-full font-semibold ${
+                    isSelected
+                      ? 'bg-white/20 text-white'
+                      : 'bg-white/[0.06] text-slate-400'
+                  }`}
+                >
+                  {count}
+                </span>
               </button>
             );
           })}
         </div>
 
-        {/* Active Filters Summary */}
-        <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+        {/* Filter Quick Pills (Urgent Deals, In Stock, Budgets) */}
+        <div className="flex items-center space-x-2 overflow-x-auto no-scrollbar py-1 text-xs">
+          {/* Urgent Deals Toggle */}
+          <button
+            onClick={() => setOnlyUrgentSales(!onlyUrgentSales)}
+            className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition-all active:scale-95 shrink-0 ${
+              onlyUrgentSales
+                ? 'bg-gradient-to-r from-amber-500 to-rose-500 text-white shadow-md shadow-rose-500/25 border border-rose-400/40'
+                : 'bg-white/[0.03] hover:bg-white/[0.06] text-amber-400/90 border border-amber-500/30'
+            }`}
+          >
+            <Flame className={`w-3.5 h-3.5 ${onlyUrgentSales ? 'fill-white' : 'fill-amber-400'}`} />
+            <span>Urgent Deals</span>
+          </button>
+
+          {/* In Stock Toggle */}
+          <button
+            onClick={() => setOnlyInStock(!onlyInStock)}
+            className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition-all active:scale-95 shrink-0 ${
+              onlyInStock
+                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/50'
+                : 'bg-white/[0.03] hover:bg-white/[0.06] text-slate-300 border border-white/[0.07]'
+            }`}
+          >
+            <div
+              className={`w-3.5 h-3.5 rounded flex items-center justify-center border ${
+                onlyInStock
+                  ? 'bg-emerald-500 border-emerald-400 text-white'
+                  : 'border-slate-600'
+              }`}
+            >
+              {onlyInStock && <Check className="w-2.5 h-2.5" />}
+            </div>
+            <span>In Stock</span>
+          </button>
+
+          {/* Budget Pills */}
+          {BUDGET_FILTERS.map((b, idx) => {
+            const isSelected = selectedBudgetIndex === idx;
+            return (
+              <button
+                key={idx}
+                onClick={() => setSelectedBudgetIndex(idx)}
+                className={`px-3 py-1.5 rounded-xl font-medium whitespace-nowrap transition-all active:scale-95 shrink-0 ${
+                  isSelected
+                    ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 font-bold'
+                    : 'bg-white/[0.03] hover:bg-white/[0.06] text-slate-400 border border-white/[0.07]'
+                }`}
+              >
+                {b.label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Results Bar / Sort / Reset */}
+        <div className="flex items-center justify-between pt-1 px-1 text-xs text-slate-400">
           <div className="flex items-center space-x-2">
             <span>
-              Showing <strong className="text-white font-bold">{filteredMobiles.length}</strong>{' '}
-              {filteredMobiles.length === 1 ? 'phone' : 'phones'} available
+              <strong className="text-white font-extrabold">{filteredMobiles.length}</strong> phones available
             </span>
-            {activeFilterCount > 0 && (
-              <span className="text-emerald-400 font-semibold">
-                • {activeFilterCount} filter{activeFilterCount > 1 ? 's' : ''} active
-              </span>
+            {isFilterActive && (
+              <button
+                onClick={resetFilters}
+                className="inline-flex items-center space-x-1 text-emerald-400 hover:text-emerald-300 font-bold ml-2 transition-colors"
+              >
+                <RotateCcw className="w-3 h-3" />
+                <span>Reset</span>
+              </button>
             )}
           </div>
 
-          {activeFilterCount > 0 && (
-            <button
-              onClick={resetFilters}
-              className="inline-flex items-center space-x-1.5 text-slate-400 hover:text-rose-400 font-bold transition-colors"
+          <div className="flex items-center space-x-1.5">
+            <span className="text-[11px] text-slate-500 hidden sm:inline">Sort:</span>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as any)}
+              aria-label="Sort phones"
+              className="bg-white/[0.04] border border-white/[0.08] text-slate-300 font-semibold text-xs rounded-xl px-2.5 py-1.5 focus:outline-none focus:ring-1 focus:ring-emerald-500 cursor-pointer"
             >
-              <RefreshCcw className="w-3.5 h-3.5" />
-              <span>Reset All Filters</span>
-            </button>
-          )}
+              <option value="latest" className="bg-slate-900 text-slate-100">Latest Stock</option>
+              <option value="price-asc" className="bg-slate-900 text-slate-100">Price: Low to High</option>
+              <option value="price-desc" className="bg-slate-900 text-slate-100">Price: High to Low</option>
+            </select>
+          </div>
         </div>
       </div>
 
-      {/* Mobiles Grid */}
+      {/* Mobiles Card Grid */}
       {filteredMobiles.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {filteredMobiles.map((mobile) => (
             <MobileCard
               key={mobile._id}
@@ -359,38 +311,38 @@ export default function CatalogView({
         </div>
       ) : (
         /* Empty State */
-        <div className="bg-slate-900/60 border border-slate-800 rounded-3xl p-8 sm:p-12 text-center max-w-lg mx-auto shadow-2xl my-12">
-          <div className="w-16 h-16 rounded-2xl bg-slate-800/60 flex items-center justify-center mx-auto mb-4 text-emerald-400">
-            <Search className="w-8 h-8" />
+        <div className="bg-white/[0.02] border border-white/[0.06] rounded-3xl p-8 sm:p-12 text-center max-w-lg mx-auto shadow-2xl my-8">
+          <div className="w-14 h-14 rounded-2xl bg-white/[0.04] flex items-center justify-center mx-auto mb-3 text-emerald-400">
+            <Search className="w-6 h-6" />
           </div>
-          <h3 className="text-lg font-black text-white mb-2">
-            {searchQuery ? `"${searchQuery}" Not in Current Stock` : 'No Phones Match Your Filters'}
+          <h3 className="text-base sm:text-lg font-bold text-white mb-1.5">
+            {searchQuery ? `"${searchQuery}" Not in Current Stock` : 'No Phones Match Filters'}
           </h3>
-          <p className="text-xs sm:text-sm text-slate-400 mb-6 leading-relaxed">
+          <p className="text-xs text-slate-400 mb-5 leading-relaxed">
             {searchQuery
-              ? `Humare pass yeh model abhi display pe nahi hai, lekin Osama bhaiya aapke liye 24 se 48 ghante me arrange karwa sakte hain!`
-              : "We couldn't find any phone matching your exact budget and search criteria. Try clearing filters or tell us what phone you need."}
+              ? `Yeh phone abhi counter pe available nahi hai, lekin Osama bhaiya aapke liye arrange karwa sakte hain!`
+              : 'Try resetting filters or search for another phone model.'}
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5">
             <button
               onClick={resetFilters}
-              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs transition-colors border border-slate-700"
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] text-slate-200 font-bold text-xs transition-colors border border-white/[0.08]"
             >
-              Clear All Filters & Show All
+              Show All Stock
             </button>
 
             {searchQuery && (
               <a
                 href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-                  `Hi Osama! I was looking for "${searchQuery}" on your Second Hand Mobile Hub website. Can you check if it is available or arrange it for me?`
+                  `Hi Osama! I was looking for "${searchQuery}" on your website. Can you check if it is available or arrange it?`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-6 py-3 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-black text-xs shadow-lg shadow-emerald-600/30 transition-all"
+                className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-5 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-black text-xs shadow-lg shadow-emerald-600/30 transition-all"
               >
                 <MessageCircle className="w-4 h-4 fill-white text-transparent" />
-                <span>Ask Osama on WhatsApp</span>
+                <span>Ask on WhatsApp</span>
               </a>
             )}
           </div>

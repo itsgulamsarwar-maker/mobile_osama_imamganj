@@ -33,7 +33,7 @@ export default function MobileBottomBar({
   };
 
   return (
-    <div className="block md:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-950/95 backdrop-blur-2xl border-t border-slate-800/90 shadow-[0_-10px_25px_-5px_rgba(0,0,0,0.6)] px-2 py-2 safe-area-bottom">
+    <div className="block md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#080c14]/95 backdrop-blur-2xl border-t border-white/[0.08] shadow-[0_-8px_25px_rgba(0,0,0,0.6)] px-2 py-2 safe-area-bottom">
       <div className="max-w-md mx-auto flex items-center justify-between gap-1">
         {/* Home Button */}
         <button
