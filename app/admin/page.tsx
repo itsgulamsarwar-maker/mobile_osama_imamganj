@@ -411,40 +411,41 @@ export default function AdminDashboardPage() {
 
       {/* Top Navigation Bar */}
       <header className="sticky top-0 z-40 bg-[#080c14]/95 backdrop-blur-xl border-b border-white/[0.08]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 sm:h-20">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-15 sm:h-20 gap-2">
             {/* Store Branding with Live Dynamic Store Name */}
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-cyan-400 p-[1.5px] shadow-lg shadow-emerald-500/20 shrink-0">
+            <div className="flex items-center space-x-2.5 sm:space-x-3 min-w-0 flex-1">
+              <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-cyan-400 p-[1.5px] shadow-lg shadow-emerald-500/20 shrink-0">
                 <div className="w-full h-full bg-[#0b0f19] rounded-[14px] flex items-center justify-center text-emerald-400 font-black">
-                  <Smartphone className="w-5 h-5" />
+                  <Smartphone className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
               </div>
 
-              <div>
-                <div className="flex items-center space-x-2">
-                  <h1 className="text-base sm:text-xl font-black text-white tracking-tight leading-tight">
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center space-x-1.5 sm:space-x-2">
+                  <h1 className="text-sm sm:text-xl font-black text-white tracking-tight leading-tight truncate">
                     {settings.storeName || '2nd Hand Mobile Hub'}
                   </h1>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                  <span className="text-[9px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 shrink-0">
                     ADMIN
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-400 font-medium">
-                  Store Management Dashboard • Gaya, Bihar
+                <p className="text-[10px] sm:text-[11px] text-slate-400 font-medium truncate">
+                  <span className="sm:hidden">Imamganj, Gaya</span>
+                  <span className="hidden sm:inline">Store Management Dashboard • Gaya, Bihar</span>
                 </p>
               </div>
             </div>
 
             {/* Quick Action Links */}
-            <div className="flex items-center space-x-2 sm:space-x-3">
+            <div className="flex items-center space-x-1.5 sm:space-x-3 shrink-0">
               <Link
                 href="/"
                 target="_blank"
-                className="inline-flex items-center space-x-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] transition-all"
+                className="inline-flex items-center space-x-1 sm:space-x-1.5 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] transition-all"
                 title="Open Live Website"
               >
-                <span>Live Shop</span>
+                <span className="hidden sm:inline">Live Shop</span>
                 <ExternalLink className="w-3.5 h-3.5 text-cyan-400" />
               </Link>
 
@@ -462,27 +463,29 @@ export default function AdminDashboardPage() {
                   setEditingMobile(null);
                   setIsEditModalOpen(true);
                 }}
-                className="inline-flex items-center space-x-1.5 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-lg shadow-emerald-500/20 active:scale-95 transition-all"
+                className="inline-flex items-center space-x-1 sm:space-x-1.5 px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white shadow-lg shadow-emerald-500/20 active:scale-95 transition-all shrink-0"
               >
                 <Plus className="w-4 h-4" />
-                <span>Add Mobile (नया फोन जोड़ें)</span>
+                <span className="sm:hidden">Add Phone</span>
+                <span className="hidden sm:inline">Add Mobile (नया फोन जोड़ें)</span>
               </button>
             </div>
           </div>
         </div>
 
         {/* Tab Switcher Sub-header */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center space-x-2 border-t border-white/[0.04] overflow-x-auto custom-scrollbar">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center space-x-1 sm:space-x-2 border-t border-white/[0.04] overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
           <button
             onClick={() => setActiveTab('inventory')}
-            className={`flex items-center space-x-2 py-3 px-4 text-xs font-bold border-b-2 transition-all shrink-0 ${
+            className={`flex items-center space-x-1.5 sm:space-x-2 py-2.5 sm:py-3 px-3 sm:px-4 text-xs font-bold border-b-2 transition-all shrink-0 ${
               activeTab === 'inventory'
                 ? 'border-emerald-400 text-emerald-300 bg-emerald-500/[0.04]'
                 : 'border-transparent text-slate-400 hover:text-white'
             }`}
           >
-            <Smartphone className="w-4 h-4" />
-            <span>Mobile Inventory (मोबाइल लिस्ट)</span>
+            <Smartphone className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <span className="sm:hidden">Inventory</span>
+            <span className="hidden sm:inline">Mobile Inventory (मोबाइल लिस्ट)</span>
             <span className="ml-1 text-[10px] px-1.5 py-0.2 rounded-full bg-slate-800 text-slate-300">
               {mobiles.length}
             </span>
@@ -490,87 +493,89 @@ export default function AdminDashboardPage() {
 
           <button
             onClick={() => setActiveTab('settings')}
-            className={`flex items-center space-x-2 py-3 px-4 text-xs font-bold border-b-2 transition-all shrink-0 ${
+            className={`flex items-center space-x-1.5 sm:space-x-2 py-2.5 sm:py-3 px-3 sm:px-4 text-xs font-bold border-b-2 transition-all shrink-0 ${
               activeTab === 'settings'
                 ? 'border-emerald-400 text-emerald-300 bg-emerald-500/[0.04]'
                 : 'border-transparent text-slate-400 hover:text-white'
             }`}
           >
-            <Settings className="w-4 h-4" />
-            <span>Store Settings & Name (दुकान सेटिंग्स & नाम)</span>
+            <Settings className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <span className="sm:hidden">Store Settings</span>
+            <span className="hidden sm:inline">Store Settings & Name (दुकान सेटिंग्स & नाम)</span>
           </button>
 
           <button
             onClick={() => setActiveTab('backup')}
-            className={`flex items-center space-x-2 py-3 px-4 text-xs font-bold border-b-2 transition-all shrink-0 ${
+            className={`flex items-center space-x-1.5 sm:space-x-2 py-2.5 sm:py-3 px-3 sm:px-4 text-xs font-bold border-b-2 transition-all shrink-0 ${
               activeTab === 'backup'
                 ? 'border-emerald-400 text-emerald-300 bg-emerald-500/[0.04]'
                 : 'border-transparent text-slate-400 hover:text-white'
             }`}
           >
-            <RotateCcw className="w-4 h-4" />
-            <span>Reset & Sample Data (डेटा रीसेट)</span>
+            <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <span className="sm:hidden">Reset Data</span>
+            <span className="hidden sm:inline">Reset & Sample Data (डेटा रीसेट)</span>
           </button>
         </div>
       </header>
 
       {/* Main Container */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+      <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-4 sm:space-y-6">
         {/* TAB 1: INVENTORY MANAGEMENT */}
         {activeTab === 'inventory' && (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Quick Stats Cards */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
-              <div className="p-4 rounded-2xl bg-[#0d121f] border border-white/[0.06] shadow-sm">
-                <div className="flex items-center justify-between text-slate-400 text-xs font-medium">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 sm:gap-4">
+              <div className="p-3 sm:p-4 rounded-2xl bg-[#0d121f] border border-white/[0.06] shadow-sm">
+                <div className="flex items-center justify-between text-slate-400 text-[11px] sm:text-xs font-medium">
                   <span>Total Phones</span>
-                  <Smartphone className="w-4 h-4 text-cyan-400" />
+                  <Smartphone className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-400" />
                 </div>
-                <div className="text-xl sm:text-2xl font-black text-white mt-1">
+                <div className="text-lg sm:text-2xl font-black text-white mt-1">
                   {stats.total}
                 </div>
                 <div className="text-[10px] text-slate-400 mt-0.5">Total stock entered</div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[#0d121f] border border-white/[0.06] shadow-sm">
-                <div className="flex items-center justify-between text-slate-400 text-xs font-medium">
-                  <span>Available / In Stock</span>
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
+              <div className="p-3 sm:p-4 rounded-2xl bg-[#0d121f] border border-white/[0.06] shadow-sm">
+                <div className="flex items-center justify-between text-slate-400 text-[11px] sm:text-xs font-medium">
+                  <span>Available</span>
+                  <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-emerald-400" />
                 </div>
-                <div className="text-xl sm:text-2xl font-black text-emerald-400 mt-1">
+                <div className="text-lg sm:text-2xl font-black text-emerald-400 mt-1">
                   {stats.inStock}
                 </div>
                 <div className="text-[10px] text-emerald-400/80 mt-0.5">Ready for sale</div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[#0d121f] border border-white/[0.06] shadow-sm">
-                <div className="flex items-center justify-between text-slate-400 text-xs font-medium">
+              <div className="p-3 sm:p-4 rounded-2xl bg-[#0d121f] border border-white/[0.06] shadow-sm">
+                <div className="flex items-center justify-between text-slate-400 text-[11px] sm:text-xs font-medium">
                   <span>Sold Out</span>
-                  <span className="w-2.5 h-2.5 rounded-full bg-rose-400" />
+                  <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-rose-400" />
                 </div>
-                <div className="text-xl sm:text-2xl font-black text-rose-400 mt-1">
+                <div className="text-lg sm:text-2xl font-black text-rose-400 mt-1">
                   {stats.sold}
                 </div>
                 <div className="text-[10px] text-slate-400 mt-0.5">Marked as sold</div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[#0d121f] border border-white/[0.06] shadow-sm">
-                <div className="flex items-center justify-between text-slate-400 text-xs font-medium">
+              <div className="p-3 sm:p-4 rounded-2xl bg-[#0d121f] border border-white/[0.06] shadow-sm">
+                <div className="flex items-center justify-between text-slate-400 text-[11px] sm:text-xs font-medium">
                   <span>Urgent Deals</span>
-                  <Flame className="w-4 h-4 text-amber-400 fill-amber-400" />
+                  <Flame className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 fill-amber-400" />
                 </div>
-                <div className="text-xl sm:text-2xl font-black text-amber-400 mt-1">
+                <div className="text-lg sm:text-2xl font-black text-amber-400 mt-1">
                   {stats.urgent}
                 </div>
                 <div className="text-[10px] text-amber-300/80 mt-0.5">Special promo active</div>
               </div>
 
-              <div className="col-span-2 lg:col-span-1 p-4 rounded-2xl bg-gradient-to-br from-emerald-950/40 via-[#0d121f] to-teal-950/30 border border-emerald-500/20 shadow-sm">
-                <div className="flex items-center justify-between text-slate-400 text-xs font-medium">
+              <div className="col-span-2 lg:col-span-1 p-3 sm:p-4 rounded-2xl bg-gradient-to-br from-emerald-950/40 via-[#0d121f] to-teal-950/30 border border-emerald-500/20 shadow-sm">
+                <div className="flex items-center justify-between text-slate-400 text-[11px] sm:text-xs font-medium">
                   <span>Active Stock Value</span>
-                  <TrendingUp className="w-4 h-4 text-emerald-400" />
+                  <TrendingUp className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400" />
                 </div>
-                <div className="text-xl sm:text-2xl font-black text-white mt-1">
+                <div className="text-lg sm:text-2xl font-black text-white mt-1">
                   ₹{stats.totalValue.toLocaleString('en-IN')}
                 </div>
                 <div className="text-[10px] text-emerald-400 mt-0.5">Current inventory worth</div>
@@ -593,10 +598,10 @@ export default function AdminDashboardPage() {
                 </div>
 
                 {/* Filter Pills */}
-                <div className="flex items-center space-x-1.5 w-full sm:w-auto overflow-x-auto custom-scrollbar">
+                <div className="flex items-center space-x-1.5 w-full sm:w-auto overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden pb-1 sm:pb-0">
                   <button
                     onClick={() => setSelectedStatus('all')}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors ${
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors shrink-0 ${
                       selectedStatus === 'all'
                         ? 'bg-emerald-500 text-white font-bold'
                         : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
@@ -606,7 +611,7 @@ export default function AdminDashboardPage() {
                   </button>
                   <button
                     onClick={() => setSelectedStatus('instock')}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors ${
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors shrink-0 ${
                       selectedStatus === 'instock'
                         ? 'bg-emerald-500 text-white font-bold'
                         : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
@@ -616,7 +621,7 @@ export default function AdminDashboardPage() {
                   </button>
                   <button
                     onClick={() => setSelectedStatus('sold')}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors ${
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors shrink-0 ${
                       selectedStatus === 'sold'
                         ? 'bg-rose-600 text-white font-bold'
                         : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
@@ -626,7 +631,7 @@ export default function AdminDashboardPage() {
                   </button>
                   <button
                     onClick={() => setSelectedStatus('urgent')}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors ${
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-colors shrink-0 ${
                       selectedStatus === 'urgent'
                         ? 'bg-amber-600 text-white font-bold'
                         : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
@@ -640,39 +645,48 @@ export default function AdminDashboardPage() {
 
             {/* BULK ACTION BAR (Visible when 1 or more items selected) */}
             {selectedIds.length > 0 && (
-              <div className="sticky top-20 z-30 bg-gradient-to-r from-rose-950/90 via-slate-900/95 to-purple-950/90 border border-rose-500/40 rounded-2xl p-3 sm:p-4 flex flex-wrap items-center justify-between gap-3 shadow-2xl backdrop-blur-xl animate-fadeIn">
-                <div className="flex items-center space-x-3">
-                  <span className="flex h-3 w-3 relative">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-3 w-3 bg-rose-500"></span>
-                  </span>
-                  <span className="text-xs sm:text-sm font-bold text-white">
-                    {selectedIds.length} phone{selectedIds.length > 1 ? 's' : ''} selected
-                  </span>
+              <div className="sticky top-20 z-30 bg-gradient-to-r from-rose-950/95 via-slate-900/95 to-purple-950/95 border border-rose-500/40 rounded-2xl p-3 sm:p-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 shadow-2xl backdrop-blur-xl animate-fadeIn">
+                <div className="flex items-center justify-between sm:justify-start space-x-3">
+                  <div className="flex items-center space-x-2">
+                    <span className="flex h-3 w-3 relative">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-3 w-3 bg-rose-500"></span>
+                    </span>
+                    <span className="text-xs sm:text-sm font-bold text-white">
+                      {selectedIds.length} phone{selectedIds.length > 1 ? 's' : ''} selected
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedIds([])}
+                    className="text-slate-400 hover:text-white text-xs px-2 py-1 underline sm:hidden"
+                  >
+                    Deselect
+                  </button>
                 </div>
 
                 <div className="flex items-center space-x-2 flex-wrap gap-1.5">
                   <button
                     type="button"
                     onClick={() => handleBulkStatusUpdate(true)}
-                    className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold border border-slate-700 transition-colors"
+                    className="flex-1 sm:flex-initial px-3 py-2 sm:py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold border border-slate-700 transition-colors text-center"
                   >
-                    Mark as Sold (बिक गया)
+                    Sold (बिक गया)
                   </button>
 
                   <button
                     type="button"
                     onClick={() => handleBulkStatusUpdate(false)}
-                    className="px-3 py-1.5 rounded-xl bg-emerald-950/50 hover:bg-emerald-900/60 text-emerald-300 text-xs font-semibold border border-emerald-500/30 transition-colors"
+                    className="flex-1 sm:flex-initial px-3 py-2 sm:py-1.5 rounded-xl bg-emerald-950/50 hover:bg-emerald-900/60 text-emerald-300 text-xs font-semibold border border-emerald-500/30 transition-colors text-center"
                   >
-                    Mark In Stock (उपलब्ध)
+                    In Stock (उपलब्ध)
                   </button>
 
                   {/* Multiple Delete Button */}
                   <button
                     type="button"
                     onClick={() => setIsBulkDeleteModalOpen(true)}
-                    className="inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-black shadow-lg shadow-rose-600/30 active:scale-95 transition-all"
+                    className="w-full sm:w-auto inline-flex items-center justify-center space-x-1.5 px-3.5 py-2 sm:py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-black shadow-lg shadow-rose-600/30 active:scale-95 transition-all"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                     <span>Delete Selected ({selectedIds.length})</span>
@@ -681,7 +695,7 @@ export default function AdminDashboardPage() {
                   <button
                     type="button"
                     onClick={() => setSelectedIds([])}
-                    className="text-slate-400 hover:text-white text-xs px-2 py-1 underline"
+                    className="hidden sm:inline-block text-slate-400 hover:text-white text-xs px-2 py-1 underline"
                   >
                     Deselect
                   </button>
@@ -706,106 +720,102 @@ export default function AdminDashboardPage() {
                   </p>
                 </div>
               ) : (
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left border-collapse">
-                    <thead>
-                      <tr className="border-b border-white/[0.08] bg-slate-900/70 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                        {/* Select All Checkbox */}
-                        <th className="p-3.5 sm:p-4 w-10">
-                          <button
-                            type="button"
-                            onClick={handleSelectAll}
-                            className="text-slate-400 hover:text-emerald-400"
-                            title="Select / Deselect All"
-                          >
-                            {selectedIds.length > 0 &&
-                            selectedIds.length === filteredMobiles.length ? (
-                              <CheckSquare className="w-4 h-4 text-emerald-400" />
-                            ) : (
-                              <Square className="w-4 h-4" />
-                            )}
-                          </button>
-                        </th>
-                        <th className="p-3.5 sm:p-4">Photo & Model</th>
-                        <th className="p-3.5 sm:p-4">Price / MRP</th>
-                        <th className="p-3.5 sm:p-4">Specs & Condition</th>
-                        <th className="p-3.5 sm:p-4">Quick Status</th>
-                        <th className="p-3.5 sm:p-4 text-right">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-white/[0.05] text-xs">
-                      {filteredMobiles.map((mobile) => {
-                        const isSelected = selectedIds.includes(mobile._id);
-                        const imgSrc =
-                          mobile.images && mobile.images.length > 0
-                            ? getImageSrc(mobile.images[0])
-                            : 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300&q=80';
+                <>
+                  {/* MOBILE VIEW (< 768px): Touch-Friendly Native Mobile Cards */}
+                  <div className="block md:hidden p-3 space-y-3">
+                    {/* Mobile Select All Control */}
+                    <div className="flex items-center justify-between px-3.5 py-2.5 bg-slate-900/70 rounded-2xl border border-white/[0.06] text-xs">
+                      <button
+                        type="button"
+                        onClick={handleSelectAll}
+                        className="flex items-center space-x-2 text-slate-300 hover:text-emerald-400 font-bold"
+                      >
+                        {selectedIds.length > 0 && selectedIds.length === filteredMobiles.length ? (
+                          <CheckSquare className="w-4 h-4 text-emerald-400" />
+                        ) : (
+                          <Square className="w-4 h-4 text-slate-400" />
+                        )}
+                        <span>Select All ({filteredMobiles.length} Phones)</span>
+                      </button>
+                      {selectedIds.length > 0 && (
+                        <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                          {selectedIds.length} Selected
+                        </span>
+                      )}
+                    </div>
 
-                        const discountPercent =
-                          mobile.originalPrice && mobile.originalPrice > mobile.price
-                            ? Math.round(
-                                ((mobile.originalPrice - mobile.price) / mobile.originalPrice) * 100
-                              )
-                            : null;
+                    {/* Mobile Phone Cards List */}
+                    {filteredMobiles.map((mobile) => {
+                      const isSelected = selectedIds.includes(mobile._id);
+                      const imgSrc =
+                        mobile.images && mobile.images.length > 0
+                          ? getImageSrc(mobile.images[0])
+                          : 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300&q=80';
 
-                        return (
-                          <tr
-                            key={mobile._id}
-                            className={`hover:bg-white/[0.02] transition-colors ${
-                              isSelected ? 'bg-emerald-500/[0.06]' : ''
-                            } ${mobile.isSold ? 'opacity-70' : ''}`}
-                          >
-                            {/* Row Checkbox */}
-                            <td className="p-3.5 sm:p-4">
-                              <button
-                                type="button"
-                                onClick={() => handleToggleSelect(mobile._id)}
-                                className="text-slate-400 hover:text-emerald-400"
-                              >
-                                {isSelected ? (
-                                  <CheckSquare className="w-4 h-4 text-emerald-400" />
-                                ) : (
-                                  <Square className="w-4 h-4" />
-                                )}
-                              </button>
-                            </td>
+                      const discountPercent =
+                        mobile.originalPrice && mobile.originalPrice > mobile.price
+                          ? Math.round(
+                              ((mobile.originalPrice - mobile.price) / mobile.originalPrice) * 100
+                            )
+                          : null;
 
-                            {/* Photo & Title */}
-                            <td className="p-3.5 sm:p-4 min-w-[200px]">
-                              <div className="flex items-center space-x-3">
-                                <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-slate-900 border border-white/[0.08] shrink-0">
-                                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                                  <img
-                                    src={imgSrc}
-                                    alt={mobile.title}
-                                    className="w-full h-full object-cover"
-                                  />
-                                  {mobile.images && mobile.images.length > 1 && (
-                                    <span className="absolute bottom-0.5 right-0.5 text-[9px] font-bold px-1 rounded bg-black/80 text-white">
-                                      +{mobile.images.length - 1}
-                                    </span>
-                                  )}
-                                </div>
+                      return (
+                        <div
+                          key={`mobile-card-${mobile._id}`}
+                          className={`p-3.5 rounded-2xl border transition-all ${
+                            isSelected
+                              ? 'bg-emerald-500/[0.08] border-emerald-500/50 shadow-lg shadow-emerald-950/20'
+                              : 'bg-slate-900/60 border-white/[0.07]'
+                          } ${mobile.isSold ? 'opacity-75' : ''}`}
+                        >
+                          {/* Row 1: Checkbox, Thumbnail, Title & Badges */}
+                          <div className="flex items-start space-x-3">
+                            <button
+                              type="button"
+                              onClick={() => handleToggleSelect(mobile._id)}
+                              className="mt-1 text-slate-400 hover:text-emerald-400 shrink-0"
+                              aria-label="Select mobile"
+                            >
+                              {isSelected ? (
+                                <CheckSquare className="w-5 h-5 text-emerald-400" />
+                              ) : (
+                                <Square className="w-5 h-5 text-slate-500" />
+                              )}
+                            </button>
 
-                                <div className="min-w-0">
-                                  <div className="font-bold text-white text-sm truncate flex items-center space-x-1.5">
-                                    <span>{mobile.title}</span>
-                                  </div>
-                                  <div className="flex items-center space-x-2 mt-0.5">
-                                    <span className="text-[10px] font-semibold px-1.5 py-0.2 rounded bg-slate-800 text-slate-300">
-                                      {mobile.brand}
-                                    </span>
-                                    <span className="text-[11px] text-slate-400 truncate">
-                                      {mobile.variant}
-                                    </span>
-                                  </div>
-                                </div>
+                            <div className="relative w-14 h-14 rounded-xl overflow-hidden bg-slate-950 border border-white/[0.1] shrink-0">
+                              {/* eslint-disable-next-line @next/next/no-img-element */}
+                              <img
+                                src={imgSrc}
+                                alt={mobile.title}
+                                className="w-full h-full object-cover"
+                              />
+                              {mobile.images && mobile.images.length > 1 && (
+                                <span className="absolute bottom-0.5 right-0.5 text-[9px] font-black px-1 rounded bg-black/85 text-white">
+                                  +{mobile.images.length - 1}
+                                </span>
+                              )}
+                            </div>
+
+                            <div className="min-w-0 flex-1">
+                              <h4 className="font-extrabold text-white text-sm leading-snug line-clamp-2">
+                                {mobile.title}
+                              </h4>
+                              <div className="flex items-center space-x-1.5 mt-1 flex-wrap gap-1">
+                                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-slate-800 text-slate-300">
+                                  {mobile.brand}
+                                </span>
+                                <span className="text-[11px] text-slate-400 font-medium">
+                                  {mobile.variant}
+                                </span>
                               </div>
-                            </td>
+                            </div>
+                          </div>
 
-                            {/* Price / MRP */}
-                            <td className="p-3.5 sm:p-4">
-                              <div className="font-extrabold text-sm text-emerald-400">
+                          {/* Row 2: Price & Specs */}
+                          <div className="mt-3 pt-2.5 border-t border-white/[0.06] flex items-center justify-between">
+                            <div>
+                              <div className="text-base font-black text-emerald-400">
                                 ₹{mobile.price.toLocaleString('en-IN')}
                               </div>
                               {mobile.originalPrice && mobile.originalPrice > mobile.price && (
@@ -820,106 +830,307 @@ export default function AdminDashboardPage() {
                                   )}
                                 </div>
                               )}
-                            </td>
+                            </div>
 
-                            {/* Specs & Condition */}
-                            <td className="p-3.5 sm:p-4">
-                              <div className="space-y-1">
-                                <div className="flex items-center space-x-1.5 text-xs text-slate-300">
-                                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                                  <span>{mobile.condition}</span>
+                            <div className="text-right space-y-1">
+                              <div className="inline-flex items-center space-x-1 text-[11px] font-semibold text-slate-300 px-2 py-0.5 rounded-md bg-white/[0.04] border border-white/[0.08]">
+                                <ShieldCheck className="w-3 h-3 text-emerald-400" />
+                                <span>{mobile.condition}</span>
+                              </div>
+                              {mobile.batteryHealth && (
+                                <div className="flex items-center justify-end space-x-1 text-[10px] text-cyan-400 font-semibold">
+                                  <Battery className="w-3 h-3" />
+                                  <span>Battery: {mobile.batteryHealth}</span>
                                 </div>
-                                {mobile.batteryHealth && (
-                                  <div className="flex items-center space-x-1.5 text-[11px] text-slate-400">
-                                    <Battery className="w-3 h-3 text-cyan-400" />
-                                    <span>Battery: {mobile.batteryHealth}</span>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Row 3: 1-Tap Quick Toggles (Sold / Available & Urgent Deal) */}
+                          <div className="mt-3 grid grid-cols-2 gap-2">
+                            <button
+                              type="button"
+                              onClick={() => handleToggleSold(mobile)}
+                              className={`flex items-center justify-center space-x-1.5 py-2 px-3 rounded-xl text-xs font-bold border transition-all active:scale-95 ${
+                                mobile.isSold
+                                  ? 'bg-rose-950/40 border-rose-500/40 text-rose-300 hover:bg-rose-900/50'
+                                  : 'bg-emerald-950/40 border-emerald-500/40 text-emerald-300 hover:bg-emerald-900/50'
+                              }`}
+                            >
+                              <span>{mobile.isSold ? '🔴 Sold (बिका)' : '🟢 Available (स्टॉक)'}</span>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => handleToggleUrgent(mobile)}
+                              className={`flex items-center justify-center space-x-1.5 py-2 px-3 rounded-xl text-xs font-bold border transition-all active:scale-95 ${
+                                mobile.isUrgentSale
+                                  ? 'bg-amber-950/50 border-amber-500/50 text-amber-300 shadow-sm shadow-amber-950/50'
+                                  : 'bg-slate-900/90 border-slate-800 text-slate-400 hover:text-slate-200'
+                              }`}
+                            >
+                              <Flame
+                                className={`w-3.5 h-3.5 ${
+                                  mobile.isUrgentSale ? 'text-amber-400 fill-amber-400' : ''
+                                }`}
+                              />
+                              <span>{mobile.isUrgentSale ? '🔥 Urgent Deal' : 'Regular Sale'}</span>
+                            </button>
+                          </div>
+
+                          {/* Row 4: Action Buttons (Edit Details, Duplicate, Delete) */}
+                          <div className="mt-2.5 flex items-center space-x-2">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setEditingMobile(mobile);
+                                setIsEditModalOpen(true);
+                              }}
+                              className="flex-1 inline-flex items-center justify-center space-x-1.5 py-2.5 px-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs shadow-md shadow-emerald-600/20 active:scale-95 transition-all"
+                            >
+                              <Edit className="w-3.5 h-3.5" />
+                              <span>Edit Phone Details</span>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => handleDuplicateMobile(mobile)}
+                              className="p-2.5 rounded-xl bg-slate-900 text-slate-300 hover:text-white border border-slate-800 active:scale-95 transition-all"
+                              title="Duplicate Phone"
+                            >
+                              <Copy className="w-4 h-4" />
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteSingle(mobile)}
+                              className="p-2.5 rounded-xl bg-rose-950/30 text-rose-400 hover:bg-rose-900/50 border border-rose-500/30 active:scale-95 transition-all"
+                              title="Delete Phone"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* DESKTOP VIEW (>= 768px): Full 6-Column Data Table */}
+                  <div className="hidden md:block overflow-x-auto">
+                    <table className="w-full text-left border-collapse">
+                      <thead>
+                        <tr className="border-b border-white/[0.08] bg-slate-900/70 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                          {/* Select All Checkbox */}
+                          <th className="p-3.5 sm:p-4 w-10">
+                            <button
+                              type="button"
+                              onClick={handleSelectAll}
+                              className="text-slate-400 hover:text-emerald-400"
+                              title="Select / Deselect All"
+                            >
+                              {selectedIds.length > 0 &&
+                              selectedIds.length === filteredMobiles.length ? (
+                                <CheckSquare className="w-4 h-4 text-emerald-400" />
+                              ) : (
+                                <Square className="w-4 h-4" />
+                              )}
+                            </button>
+                          </th>
+                          <th className="p-3.5 sm:p-4">Photo & Model</th>
+                          <th className="p-3.5 sm:p-4">Price / MRP</th>
+                          <th className="p-3.5 sm:p-4">Specs & Condition</th>
+                          <th className="p-3.5 sm:p-4">Quick Status</th>
+                          <th className="p-3.5 sm:p-4 text-right">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-white/[0.05] text-xs">
+                        {filteredMobiles.map((mobile) => {
+                          const isSelected = selectedIds.includes(mobile._id);
+                          const imgSrc =
+                            mobile.images && mobile.images.length > 0
+                              ? getImageSrc(mobile.images[0])
+                              : 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300&q=80';
+
+                          const discountPercent =
+                            mobile.originalPrice && mobile.originalPrice > mobile.price
+                              ? Math.round(
+                                  ((mobile.originalPrice - mobile.price) / mobile.originalPrice) * 100
+                                )
+                              : null;
+
+                          return (
+                            <tr
+                              key={mobile._id}
+                              className={`hover:bg-white/[0.02] transition-colors ${
+                                isSelected ? 'bg-emerald-500/[0.06]' : ''
+                              } ${mobile.isSold ? 'opacity-70' : ''}`}
+                            >
+                              {/* Row Checkbox */}
+                              <td className="p-3.5 sm:p-4">
+                                <button
+                                  type="button"
+                                  onClick={() => handleToggleSelect(mobile._id)}
+                                  className="text-slate-400 hover:text-emerald-400"
+                                >
+                                  {isSelected ? (
+                                    <CheckSquare className="w-4 h-4 text-emerald-400" />
+                                  ) : (
+                                    <Square className="w-4 h-4" />
+                                  )}
+                                </button>
+                              </td>
+
+                              {/* Photo & Title */}
+                              <td className="p-3.5 sm:p-4 min-w-[200px]">
+                                <div className="flex items-center space-x-3">
+                                  <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-slate-900 border border-white/[0.08] shrink-0">
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img
+                                      src={imgSrc}
+                                      alt={mobile.title}
+                                      className="w-full h-full object-cover"
+                                    />
+                                    {mobile.images && mobile.images.length > 1 && (
+                                      <span className="absolute bottom-0.5 right-0.5 text-[9px] font-bold px-1 rounded bg-black/80 text-white">
+                                        +{mobile.images.length - 1}
+                                      </span>
+                                    )}
+                                  </div>
+
+                                  <div className="min-w-0">
+                                    <div className="font-bold text-white text-sm truncate flex items-center space-x-1.5">
+                                      <span>{mobile.title}</span>
+                                    </div>
+                                    <div className="flex items-center space-x-2 mt-0.5">
+                                      <span className="text-[10px] font-semibold px-1.5 py-0.2 rounded bg-slate-800 text-slate-300">
+                                        {mobile.brand}
+                                      </span>
+                                      <span className="text-[11px] text-slate-400 truncate">
+                                        {mobile.variant}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+
+                              {/* Price / MRP */}
+                              <td className="p-3.5 sm:p-4">
+                                <div className="font-extrabold text-sm text-emerald-400">
+                                  ₹{mobile.price.toLocaleString('en-IN')}
+                                </div>
+                                {mobile.originalPrice && mobile.originalPrice > mobile.price && (
+                                  <div className="flex items-center space-x-1.5 text-[11px] text-slate-500">
+                                    <span className="line-through">
+                                      ₹{mobile.originalPrice.toLocaleString('en-IN')}
+                                    </span>
+                                    {discountPercent && (
+                                      <span className="text-emerald-400 font-bold">
+                                        {discountPercent}% OFF
+                                      </span>
+                                    )}
                                   </div>
                                 )}
-                              </div>
-                            </td>
+                              </td>
 
-                            {/* 1-Click Status Toggles */}
-                            <td className="p-3.5 sm:p-4">
-                              <div className="flex flex-col space-y-1.5">
-                                {/* Sold / In Stock Toggle Button */}
-                                <button
-                                  type="button"
-                                  onClick={() => handleToggleSold(mobile)}
-                                  className={`inline-flex items-center justify-between px-2.5 py-1 rounded-lg text-[11px] font-bold border transition-all ${
-                                    mobile.isSold
-                                      ? 'bg-rose-950/30 border-rose-500/30 text-rose-300 hover:bg-rose-900/40'
-                                      : 'bg-emerald-950/30 border-emerald-500/30 text-emerald-300 hover:bg-emerald-900/40'
-                                  }`}
-                                  title="Click to toggle Sold / In Stock"
-                                >
-                                  <span>{mobile.isSold ? '🔴 Sold' : '🟢 Available'}</span>
-                                </button>
+                              {/* Specs & Condition */}
+                              <td className="p-3.5 sm:p-4">
+                                <div className="space-y-1">
+                                  <div className="flex items-center space-x-1.5 text-xs text-slate-300">
+                                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                                    <span>{mobile.condition}</span>
+                                  </div>
+                                  {mobile.batteryHealth && (
+                                    <div className="flex items-center space-x-1.5 text-[11px] text-slate-400">
+                                      <Battery className="w-3 h-3 text-cyan-400" />
+                                      <span>Battery: {mobile.batteryHealth}</span>
+                                    </div>
+                                  )}
+                                </div>
+                              </td>
 
-                                {/* Urgent Deal Toggle Button */}
-                                <button
-                                  type="button"
-                                  onClick={() => handleToggleUrgent(mobile)}
-                                  className={`inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-lg text-[10px] font-bold border transition-all ${
-                                    mobile.isUrgentSale
-                                      ? 'bg-amber-950/40 border-amber-500/40 text-amber-300'
-                                      : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200'
-                                  }`}
-                                  title="Click to toggle Urgent Sale Deal"
-                                >
-                                  <Flame
-                                    className={`w-3 h-3 ${
-                                      mobile.isUrgentSale ? 'text-amber-400 fill-amber-400' : ''
+                              {/* 1-Click Status Toggles */}
+                              <td className="p-3.5 sm:p-4">
+                                <div className="flex flex-col space-y-1.5">
+                                  {/* Sold / In Stock Toggle Button */}
+                                  <button
+                                    type="button"
+                                    onClick={() => handleToggleSold(mobile)}
+                                    className={`inline-flex items-center justify-between px-2.5 py-1 rounded-lg text-[11px] font-bold border transition-all ${
+                                      mobile.isSold
+                                        ? 'bg-rose-950/30 border-rose-500/30 text-rose-300 hover:bg-rose-900/40'
+                                        : 'bg-emerald-950/30 border-emerald-500/30 text-emerald-300 hover:bg-emerald-900/40'
                                     }`}
-                                  />
-                                  <span>{mobile.isUrgentSale ? 'Urgent Deal' : 'Regular'}</span>
-                                </button>
-                              </div>
-                            </td>
+                                    title="Click to toggle Sold / In Stock"
+                                  >
+                                    <span>{mobile.isSold ? '🔴 Sold' : '🟢 Available'}</span>
+                                  </button>
 
-                            {/* Action Buttons */}
-                            <td className="p-3.5 sm:p-4 text-right">
-                              <div className="inline-flex items-center space-x-1">
-                                {/* Duplicate */}
-                                <button
-                                  type="button"
-                                  onClick={() => handleDuplicateMobile(mobile)}
-                                  className="p-1.5 rounded-lg bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-800 transition-colors"
-                                  title="Duplicate Mobile"
-                                >
-                                  <Copy className="w-3.5 h-3.5" />
-                                </button>
+                                  {/* Urgent Deal Toggle Button */}
+                                  <button
+                                    type="button"
+                                    onClick={() => handleToggleUrgent(mobile)}
+                                    className={`inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-lg text-[10px] font-bold border transition-all ${
+                                      mobile.isUrgentSale
+                                        ? 'bg-amber-950/40 border-amber-500/40 text-amber-300'
+                                        : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200'
+                                    }`}
+                                    title="Click to toggle Urgent Sale Deal"
+                                  >
+                                    <Flame
+                                      className={`w-3 h-3 ${
+                                        mobile.isUrgentSale ? 'text-amber-400 fill-amber-400' : ''
+                                      }`}
+                                    />
+                                    <span>{mobile.isUrgentSale ? 'Urgent Deal' : 'Regular'}</span>
+                                  </button>
+                                </div>
+                              </td>
 
-                                {/* Edit Button */}
-                                <button
-                                  type="button"
-                                  onClick={() => {
-                                    setEditingMobile(mobile);
-                                    setIsEditModalOpen(true);
-                                  }}
-                                  className="inline-flex items-center space-x-1 px-2.5 py-1.5 rounded-lg bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600/30 border border-emerald-500/30 font-bold text-xs transition-colors"
-                                  title="Edit Phone"
-                                >
-                                  <Edit className="w-3.5 h-3.5" />
-                                  <span>Edit</span>
-                                </button>
+                              {/* Action Buttons */}
+                              <td className="p-3.5 sm:p-4 text-right">
+                                <div className="inline-flex items-center space-x-1">
+                                  {/* Duplicate */}
+                                  <button
+                                    type="button"
+                                    onClick={() => handleDuplicateMobile(mobile)}
+                                    className="p-1.5 rounded-lg bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-800 transition-colors"
+                                    title="Duplicate Mobile"
+                                  >
+                                    <Copy className="w-3.5 h-3.5" />
+                                  </button>
 
-                                {/* Delete Single Button */}
-                                <button
-                                  type="button"
-                                  onClick={() => handleDeleteSingle(mobile)}
-                                  className="p-1.5 rounded-lg bg-rose-950/20 text-rose-400 hover:bg-rose-900/40 border border-rose-500/20 transition-colors"
-                                  title="Delete Phone"
-                                >
-                                  <Trash2 className="w-3.5 h-3.5" />
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
+                                  {/* Edit Button */}
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      setEditingMobile(mobile);
+                                      setIsEditModalOpen(true);
+                                    }}
+                                    className="inline-flex items-center space-x-1 px-2.5 py-1.5 rounded-lg bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600/30 border border-emerald-500/30 font-bold text-xs transition-colors"
+                                    title="Edit Phone"
+                                  >
+                                    <Edit className="w-3.5 h-3.5" />
+                                    <span>Edit</span>
+                                  </button>
+
+                                  {/* Delete Single Button */}
+                                  <button
+                                    type="button"
+                                    onClick={() => handleDeleteSingle(mobile)}
+                                    className="p-1.5 rounded-lg bg-rose-950/20 text-rose-400 hover:bg-rose-900/40 border border-rose-500/20 transition-colors"
+                                    title="Delete Phone"
+                                  >
+                                    <Trash2 className="w-3.5 h-3.5" />
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </>
               )}
             </div>
           </div>
@@ -1223,7 +1434,7 @@ export default function AdminDashboardPage() {
                 <button
                   type="submit"
                   disabled={savingSettings}
-                  className="inline-flex items-center space-x-2 px-8 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-white text-sm font-black shadow-xl shadow-emerald-500/25 active:scale-95 transition-all disabled:opacity-50"
+                  className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-6 sm:px-8 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-white text-sm font-black shadow-xl shadow-emerald-500/25 active:scale-95 transition-all disabled:opacity-50"
                 >
                   {savingSettings ? (
                     <>

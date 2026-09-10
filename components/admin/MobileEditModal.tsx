@@ -304,29 +304,29 @@ export default function MobileEditModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md overflow-y-auto animate-fadeIn">
-      <div className="bg-[#0b0f19] border border-emerald-500/30 rounded-3xl w-full max-w-4xl my-auto shadow-2xl shadow-emerald-950/30 overflow-hidden flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-black/85 backdrop-blur-md overflow-y-auto animate-fadeIn">
+      <div className="bg-[#0b0f19] border border-emerald-500/30 rounded-2xl sm:rounded-3xl w-full max-w-4xl my-auto shadow-2xl shadow-emerald-950/30 overflow-hidden flex flex-col max-h-[96vh] sm:max-h-[92vh]">
         {/* Modal Header */}
-        <div className="p-4 sm:p-6 bg-gradient-to-r from-emerald-950/40 via-slate-900 to-teal-950/40 border-b border-white/[0.08] flex items-center justify-between shrink-0">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-emerald-500 to-cyan-500 p-[1.5px] shadow-lg shadow-emerald-500/20 shrink-0">
-              <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center text-emerald-400">
-                <Smartphone className="w-5 h-5" />
+        <div className="p-3.5 sm:p-6 bg-gradient-to-r from-emerald-950/40 via-slate-900 to-teal-950/40 border-b border-white/[0.08] flex items-center justify-between shrink-0">
+          <div className="flex items-center space-x-2.5 sm:space-x-3 min-w-0 flex-1">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-emerald-500 to-cyan-500 p-[1.5px] shadow-lg shadow-emerald-500/20 shrink-0">
+              <div className="w-full h-full bg-slate-950 rounded-[10px] sm:rounded-[14px] flex items-center justify-center text-emerald-400">
+                <Smartphone className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
             </div>
-            <div>
-              <h2 className="text-base sm:text-lg font-bold text-white leading-tight">
-                {isEditing ? 'Edit Mobile Details (फोन एडिट करें)' : 'Add New Mobile (नया फोन जोड़ें)'}
+            <div className="min-w-0 flex-1">
+              <h2 className="text-sm sm:text-lg font-bold text-white leading-tight truncate">
+                {isEditing ? 'Edit Mobile (फोन एडिट करें)' : 'Add New Mobile (नया फोन जोड़ें)'}
               </h2>
-              <p className="text-xs text-slate-400 mt-0.5">
-                {isEditing ? `Editing: ${initialData?.title}` : 'Fill in phone details with automatic image compression'}
+              <p className="text-[11px] sm:text-xs text-slate-400 mt-0.5 truncate">
+                {isEditing ? `Editing: ${initialData?.title}` : 'Fill in phone details with image compression'}
               </p>
             </div>
           </div>
 
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-white p-2 rounded-xl hover:bg-white/5 transition-colors"
+            className="text-slate-400 hover:text-white p-1.5 sm:p-2 rounded-xl hover:bg-white/5 transition-colors shrink-0"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
@@ -784,12 +784,12 @@ export default function MobileEditModal({
         </form>
 
         {/* Modal Footer Actions */}
-        <div className="p-4 sm:p-6 bg-slate-950/90 border-t border-white/[0.08] flex items-center justify-between shrink-0">
+        <div className="p-3 sm:p-6 bg-slate-950/90 border-t border-white/[0.08] flex items-center justify-between gap-2 shrink-0">
           <button
             type="button"
             onClick={onClose}
             disabled={saving || compressing}
-            className="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/5 border border-slate-700 transition-colors"
+            className="px-3.5 py-2.5 sm:px-4 sm:py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/5 border border-slate-700 transition-colors"
           >
             Cancel
           </button>
@@ -798,17 +798,18 @@ export default function MobileEditModal({
             type="button"
             onClick={handleSubmit}
             disabled={saving || compressing}
-            className="inline-flex items-center space-x-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white text-xs font-black shadow-lg shadow-emerald-500/25 active:scale-95 transition-all disabled:opacity-50"
+            className="flex-1 sm:flex-initial inline-flex items-center justify-center space-x-1.5 sm:space-x-2 px-4 py-2.5 sm:px-6 sm:py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-white text-xs font-black shadow-lg shadow-emerald-500/25 active:scale-95 transition-all disabled:opacity-50"
           >
             {saving ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                <span>Saving Changes...</span>
+                <span>Saving...</span>
               </>
             ) : (
               <>
                 <Save className="w-4 h-4" />
-                <span>{isEditing ? 'Save Changes (अपडेट करें)' : 'Add Mobile (स्टॉक में जोड़ें)'}</span>
+                <span>{isEditing ? 'Save Changes' : 'Add Mobile'}</span>
+                <span className="hidden sm:inline">{isEditing ? ' (अपडेट करें)' : ' (स्टॉक में जोड़ें)'}</span>
               </>
             )}
           </button>
