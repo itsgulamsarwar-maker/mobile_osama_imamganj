@@ -6,12 +6,14 @@ import { MessageCircle, X, Video, RefreshCw, Zap, Instagram } from 'lucide-react
 interface FloatingWhatsAppProps {
   whatsappNumber?: string;
   instagramUrl?: string;
+  storeName?: string;
 }
 
 export default function FloatingWhatsApp({
   whatsappNumber = process.env.NEXT_PUBLIC_STORE_WHATSAPP_NUMBER || '919102609396',
   instagramUrl = process.env.NEXT_PUBLIC_STORE_INSTAGRAM_URL ||
     'https://www.instagram.com/second_hand_mobile_hub1',
+  storeName = 'OSAMA MOBILE',
 }: FloatingWhatsAppProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -49,7 +51,7 @@ export default function FloatingWhatsApp({
                 <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-300 border-2 border-slate-900 rounded-full" />
               </div>
               <div>
-                <h4 className="font-bold text-sm">Osama Mobile Hub</h4>
+                <h4 className="font-bold text-sm">{storeName}</h4>
                 <p className="text-[11px] text-emerald-100 flex items-center">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 mr-1.5 animate-pulse" />
                   +{whatsappNumber} • Active Now
@@ -113,7 +115,7 @@ export default function FloatingWhatsApp({
             {/* Direct General WhatsApp Chat */}
             <a
               href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-                'Hi! I want to inquire about second-hand smartphones available at Second Hand Mobile Hub Imamganj.'
+                `Hi! I want to inquire about second-hand smartphones available at ${storeName}.`
               )}`}
               target="_blank"
               rel="noopener noreferrer"

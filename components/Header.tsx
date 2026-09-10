@@ -20,7 +20,7 @@ export default function Header({ settings = defaultSiteSettings }: HeaderProps) 
   const logoSrc = settings.logo ? getImageSrc(settings.logo) : null;
 
   const directSupportUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    `Hello! I am contacting Osama Mobile regarding available smartphones.`
+    `Hello! I am contacting ${settings.storeName || 'Osama Mobile'} regarding available smartphones.`
   )}`;
 
   return (
@@ -34,7 +34,7 @@ export default function Header({ settings = defaultSiteSettings }: HeaderProps) 
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
             <span className="text-emerald-400 font-medium">
-              Retail Counter Open @ Kolkata Bus Stand, Imamganj • 7-Day Testing Warranty
+              {settings.announcement || 'Retail Counter Open @ Kolkata Bus Stand, Imamganj • 7-Day Testing Warranty'}
             </span>
           </div>
 
@@ -65,7 +65,7 @@ export default function Header({ settings = defaultSiteSettings }: HeaderProps) 
                 {logoSrc ? (
                   <Image
                     src={logoSrc}
-                    alt={settings.storeName}
+                    alt={settings.storeName || 'OSAMA MOBILE'}
                     width={44}
                     height={44}
                     className="w-full h-full object-cover"
@@ -79,14 +79,14 @@ export default function Header({ settings = defaultSiteSettings }: HeaderProps) 
             <div className="min-w-0 flex-1">
               <div className="flex items-center space-x-1.5">
                 <span className="text-base sm:text-lg font-black text-white tracking-tight leading-tight truncate">
-                  OSAMA MOBILE
+                  {settings.storeName || 'OSAMA MOBILE'}
                 </span>
                 <span className="hidden xs:inline-flex items-center text-[9px] font-bold px-1.5 py-0.2 rounded-md bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
                   VERIFIED
                 </span>
               </div>
               <p className="text-[11px] text-slate-400 font-medium truncate leading-tight mt-0.5">
-                Imamganj • Second Hand Mobile Hub
+                {settings.storeTagline || 'Imamganj • Second Hand Mobile Hub'}
               </p>
             </div>
           </Link>

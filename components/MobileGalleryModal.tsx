@@ -210,6 +210,7 @@ export default function MobileGalleryModal({
                     src={src}
                     alt={`Thumb ${idx + 1}`}
                     fill
+                    loading="lazy"
                     sizes="64px"
                     className="object-cover"
                   />

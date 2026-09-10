@@ -1,0 +1,248 @@
+{
+  "settings": {
+    "storeName": "OSAMA MOBILE",
+    "storeTagline": "Certified 2nd Hand Smartphones • Kolkata Bus Stand, Imamganj, Gaya",
+    "phone": "+91 9102609396",
+    "whatsappNumber": "919102609396",
+    "address": "Kolkata Bus Stand, Imamganj, Gaya, Bihar",
+    "instagramUrl": "https://www.instagram.com/second_hand_mobile_hub1",
+    "instagramHandle": "@second_hand_mobile_hub1",
+    "announcement": "Imamganj Retail Counter Open • 32-Point Quality Inspected • 7-Day Testing Guarantee",
+    "openingHours": "Monday - Saturday: 10:00 AM - 9:00 PM | Sunday: 11:00 AM - 7:00 PM",
+    "showPromoBanner": true,
+    "promoTag": "🔥 URGENT SELLING OFFER",
+    "promoTitle": "Flat ₹2,000 Extra Off on all 5G Phones This Week!",
+    "promoDescription": "Free 20W Fast Charger + Original Back Cover with every purchase. Limited stock available at Kolkata Bus Stand, Imamganj counter.",
+    "promoButtonText": "Claim Offer on WhatsApp"
+  },
+  "mobiles": [
+    {
+      "_id": "mock-1",
+      "title": "iPhone 14 Pro - Deep Purple",
+      "brand": "Apple",
+      "price": 68999,
+      "originalPrice": 129900,
+      "variant": "128GB / 6GB RAM",
+      "condition": "Like New (10/10)",
+      "batteryHealth": "92%",
+      "includes": [
+        "Box",
+        "Original Charger",
+        "Bill",
+        "Cable"
+      ],
+      "isSold": false,
+      "description": "Flawless condition, zero scratches on screen and body. Always protected with tempered glass and case. Battery health 92%, Apple genuine display.",
+      "images": [
+        "https://images.unsplash.com/photo-1678685888221-cda773a3dcdb?w=1000&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=1000&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=1000&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=1000&auto=format&fit=crop&q=80"
+      ],
+      "_createdAt": "2024-04-10T10:00:00Z",
+      "isUrgentSale": false
+    },
+    {
+      "_id": "mock-2",
+      "title": "Samsung Galaxy S23 Ultra 5G",
+      "brand": "Samsung",
+      "price": 64500,
+      "originalPrice": 124999,
+      "isUrgentSale": true,
+      "variant": "256GB / 12GB RAM",
+      "condition": "Like New (10/10)",
+      "batteryHealth": "96%",
+      "includes": [
+        "Box",
+        "Original Charger",
+        "Cable"
+      ],
+      "isSold": false,
+      "description": "Phantom Black, 200MP camera, Snapdragon 8 Gen 2. S-Pen included and working seamlessly. Minor bezel mark otherwise mint.",
+      "images": [
+        "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=1000&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=1000&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=1000&auto=format&fit=crop&q=80"
+      ],
+      "_createdAt": "2024-04-09T14:30:00Z"
+    },
+    {
+      "_id": "mock-3",
+      "title": "OnePlus 11 5G - Titan Black",
+      "brand": "OnePlus",
+      "price": 36999,
+      "originalPrice": 56999,
+      "variant": "256GB / 16GB RAM",
+      "condition": "Good",
+      "batteryHealth": "89%",
+      "includes": [
+        "Box",
+        "Original Charger",
+        "Cable"
+      ],
+      "isSold": false,
+      "description": "Hasselblad camera system, 100W SUPERVOOC original fast charger included. Charges 0 to 100% in 25 mins. Super smooth 120Hz display.",
+      "images": [
+        "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=1000&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=1000&auto=format&fit=crop&q=80"
+      ],
+      "_createdAt": "2024-04-08T09:15:00Z"
+    },
+    {
+      "_id": "mock-4",
+      "title": "Google Pixel 7 Pro 5G - Hazel",
+      "brand": "Google",
+      "price": 38499,
+      "originalPrice": 84999,
+      "variant": "128GB / 12GB RAM",
+      "condition": "Good",
+      "batteryHealth": "91%",
+      "includes": [
+        "Box",
+        "Bill",
+        "Cable"
+      ],
+      "isSold": false,
+      "description": "Google Tensor G2 processor, incredible computational photography with 5x telephoto zoom. Original screen, clean condition.",
+      "images": [
+        "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=1000&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=1000&auto=format&fit=crop&q=80"
+      ],
+      "_createdAt": "2024-04-07T11:45:00Z"
+    },
+    {
+      "_id": "mock-5",
+      "title": "iPhone 13 - Midnight Blue",
+      "brand": "Apple",
+      "price": 37999,
+      "originalPrice": 69900,
+      "variant": "128GB / 4GB RAM",
+      "condition": "Like New (10/10)",
+      "batteryHealth": "87%",
+      "includes": [
+        "Box",
+        "Bill",
+        "Cable"
+      ],
+      "isSold": true,
+      "description": "Very well maintained personal phone. 100% genuine parts, TrueTone and Face ID verified. Recently sold.",
+      "images": [
+        "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=1000&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=1000&auto=format&fit=crop&q=80"
+      ],
+      "_createdAt": "2024-04-06T16:00:00Z"
+    },
+    {
+      "_id": "mock-6",
+      "title": "Xiaomi 13 Pro 5G - Ceramic Black",
+      "brand": "Xiaomi",
+      "price": 42999,
+      "originalPrice": 79999,
+      "variant": "256GB / 12GB RAM",
+      "condition": "Fair",
+      "batteryHealth": "86%",
+      "includes": [
+        "Original Charger",
+        "Cable"
+      ],
+      "isSold": false,
+      "description": "Leica 1-inch sensor professional optics, 120W charging. Light micro-scratches on back cover, screen in pristine condition.",
+      "images": [
+        "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=1000&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=1000&auto=format&fit=crop&q=80"
+      ],
+      "_createdAt": "2024-04-05T13:20:00Z"
+    },
+    {
+      "_id": "mock-7",
+      "title": "Vivo V29 5G - Himalayan Blue",
+      "brand": "Vivo",
+      "price": 21999,
+      "originalPrice": 32999,
+      "isUrgentSale": true,
+      "variant": "128GB / 8GB RAM",
+      "condition": "Like New (10/10)",
+      "batteryHealth": "94%",
+      "includes": [
+        "Box",
+        "Original Charger",
+        "Cable"
+      ],
+      "isSold": false,
+      "description": "Aura Light portrait camera, 1.5K 120Hz 3D curved display. Complete original fast charger and bill provided. Outstanding camera condition.",
+      "images": [
+        "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=1000&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=1000&auto=format&fit=crop&q=80"
+      ],
+      "_createdAt": "2024-04-04T11:10:00Z"
+    },
+    {
+      "_id": "mock-8",
+      "title": "iPhone 12 - White",
+      "brand": "Apple",
+      "price": 26999,
+      "originalPrice": 59900,
+      "isUrgentSale": true,
+      "variant": "128GB / 4GB RAM",
+      "condition": "Good",
+      "batteryHealth": "85%",
+      "includes": [
+        "Box",
+        "Cable"
+      ],
+      "isSold": false,
+      "description": "Super Retina XDR OLED display, A14 Bionic. TrueTone & Face ID 100% active and working. Clean glass, minor frame pocket wear.",
+      "images": [
+        "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=1000&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=1000&auto=format&fit=crop&q=80"
+      ],
+      "_createdAt": "2024-04-03T15:40:00Z"
+    },
+    {
+      "_id": "mock-9",
+      "title": "Realme 11 Pro+ 5G - Oasis Green",
+      "brand": "Realme",
+      "price": 18499,
+      "originalPrice": 27999,
+      "variant": "256GB / 12GB RAM",
+      "condition": "Like New (10/10)",
+      "batteryHealth": "92%",
+      "includes": [
+        "Box",
+        "Original Charger",
+        "Bill",
+        "Cable"
+      ],
+      "isSold": false,
+      "description": "200MP OIS camera with 4x lossless in-sensor zoom, luxury vegan leather back designed by Matteo Menotto. 100W SuperVOOC included.",
+      "images": [
+        "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=1000&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=1000&auto=format&fit=crop&q=80"
+      ],
+      "_createdAt": "2024-04-02T10:30:00Z"
+    },
+    {
+      "_id": "mock-10",
+      "title": "OnePlus Nord CE 3 5G - Aqua Surge",
+      "brand": "OnePlus",
+      "price": 16999,
+      "originalPrice": 26999,
+      "variant": "128GB / 8GB RAM",
+      "condition": "Like New (10/10)",
+      "batteryHealth": "95%",
+      "includes": [
+        "Box",
+        "Original Charger",
+        "Cable"
+      ],
+      "isSold": false,
+      "description": "Snapdragon 782G, Sony IMX890 flagship camera with OIS. 80W fast charging. Extremely smooth OxygenOS experience, scratchless condition.",
+      "images": [
+        "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=1000&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=1000&auto=format&fit=crop&q=80"
+      ],
+      "_createdAt": "2024-04-01T09:00:00Z"
+    }
+  ],
+  "lastUpdated": "2026-09-10T05:20:51.934Z"
+}

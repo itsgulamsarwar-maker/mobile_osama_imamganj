@@ -19,9 +19,14 @@ import { getImageSrc } from '@/lib/sanity.image';
 interface MobileCardProps {
   mobile: MobileItem;
   onOpenGallery: (mobile: MobileItem, index?: number) => void;
+  whatsappNumber?: string;
 }
 
-export default function MobileCard({ mobile, onOpenGallery }: MobileCardProps) {
+export default function MobileCard({
+  mobile,
+  onOpenGallery,
+  whatsappNumber,
+}: MobileCardProps) {
   const {
     title,
     brand,
@@ -48,7 +53,7 @@ export default function MobileCard({ mobile, onOpenGallery }: MobileCardProps) {
   const savingsAmount =
     originalPrice && originalPrice > price ? originalPrice - price : null;
 
-  const storePhone = process.env.NEXT_PUBLIC_STORE_WHATSAPP_NUMBER || '919102609396';
+  const storePhone = whatsappNumber || process.env.NEXT_PUBLIC_STORE_WHATSAPP_NUMBER || '919102609396';
   const whatsappQuery = encodeURIComponent(
     `Hello Osama! I am interested in buying *${title}* (${variant}) listed for *₹${price.toLocaleString(
       'en-IN'
@@ -61,6 +66,12 @@ export default function MobileCard({ mobile, onOpenGallery }: MobileCardProps) {
   const restockNotifyUrl = `https://wa.me/${storePhone}?text=${encodeURIComponent(
     `Hello Osama! I saw *${title}* was Sold Out on your website. Please notify me when similar stock arrives.`
   )}`;
+
+  const [imgSrc, setImgSrc] = React.useState(primaryImageSrc);
+
+  React.useEffect(() => {
+    setImgSrc(primaryImageSrc);
+  }, [primaryImageSrc]);
 
   return (
     <div
@@ -77,12 +88,14 @@ export default function MobileCard({ mobile, onOpenGallery }: MobileCardProps) {
         className="relative w-full aspect-[4/3] bg-gradient-to-b from-white/[0.02] to-black/30 overflow-hidden cursor-pointer flex items-center justify-center p-3"
         onClick={() => onOpenGallery(mobile, 0)}
       >
-        {primaryImageSrc ? (
+        {imgSrc ? (
           <Image
-            src={primaryImageSrc}
+            src={imgSrc}
             alt={title}
             fill
+            loading="lazy"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            onError={() => setImgSrc('https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&q=80')}
             className={`object-contain p-4 transition-transform duration-500 ${
               isSold ? 'grayscale contrast-75' : 'group-hover:scale-105'
             }`}

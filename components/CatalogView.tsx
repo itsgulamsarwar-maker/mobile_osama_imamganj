@@ -342,6 +342,7 @@ export default function CatalogView({
               key={mobile._id}
               mobile={mobile}
               onOpenGallery={handleOpenGallery}
+              whatsappNumber={whatsappNumber}
             />
           ))}
         </div>

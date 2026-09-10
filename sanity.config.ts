@@ -8,7 +8,7 @@ const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production';
 export default defineConfig({
   name: 'default',
   title: 'Second-Hand Mobile Hub Studio',
-  basePath: '/admin',
+  basePath: '/admin/studio',
 
   projectId,
   dataset,

@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  client,
-  mobilesQuery,
-  MobileItem,
-  getSiteSettings,
-  SiteSettings,
-} from '@/lib/sanity.client';
+import { MobileItem, SiteSettings, defaultSiteSettings } from '@/lib/sanity.client';
+import { getInventoryMobiles, getActiveSiteSettings } from '@/lib/inventoryStore';
 import { mockMobiles } from '@/lib/mockData';
 import CatalogView from '@/components/CatalogView';
 import QualityInspectorSection from '@/components/QualityInspectorSection';
@@ -19,18 +14,27 @@ export const dynamic = 'force-dynamic';
 
 async function getMobiles(): Promise<MobileItem[]> {
   try {
-    const sanityData = await client.fetch<MobileItem[]>(mobilesQuery);
-    if (sanityData && sanityData.length > 0) {
-      return sanityData;
+    const data = await getInventoryMobiles();
+    if (data && data.length > 0) {
+      return data;
     }
   } catch (error) {
-    console.warn('Could not fetch from Sanity, falling back to mock catalog:', error);
+    console.warn('Could not fetch from inventory store:', error);
   }
   return mockMobiles;
 }
 
+async function getSettings(): Promise<SiteSettings> {
+  try {
+    return await getActiveSiteSettings();
+  } catch (error) {
+    console.warn('Could not fetch settings from inventory store:', error);
+    return defaultSiteSettings;
+  }
+}
+
 export default async function HomePage() {
-  const [mobiles, settings] = await Promise.all([getMobiles(), getSiteSettings()]);
+  const [mobiles, settings] = await Promise.all([getMobiles(), getSettings()]);
 
   const whatsappNumber = settings.whatsappNumber || '919102609396';
   const instagramUrl =
