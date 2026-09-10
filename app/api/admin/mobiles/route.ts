@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import {
   getInventoryMobiles,
   addInventoryMobile,
@@ -29,6 +30,8 @@ export async function POST(req: NextRequest) {
       );
     }
     const created = await addInventoryMobile(body);
+    revalidatePath('/', 'layout');
+    revalidatePath('/');
     return NextResponse.json({ success: true, mobile: created });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
@@ -46,6 +49,8 @@ export async function PUT(req: NextRequest) {
     if (!updated) {
       return NextResponse.json({ success: false, error: 'Mobile not found' }, { status: 404 });
     }
+    revalidatePath('/', 'layout');
+    revalidatePath('/');
     return NextResponse.json({ success: true, mobile: updated });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
@@ -60,6 +65,8 @@ export async function DELETE(req: NextRequest) {
     // Check if single ID in query parameter
     if (queryId) {
       const deleted = await deleteInventoryMobile(queryId);
+      revalidatePath('/', 'layout');
+      revalidatePath('/');
       return NextResponse.json({ success: deleted, deletedCount: deleted ? 1 : 0 });
     }
 
@@ -73,11 +80,15 @@ export async function DELETE(req: NextRequest) {
 
     if (body.ids && Array.isArray(body.ids)) {
       const deletedCount = await bulkDeleteInventoryMobiles(body.ids);
+      revalidatePath('/', 'layout');
+      revalidatePath('/');
       return NextResponse.json({ success: true, deletedCount });
     }
 
     if (body.id) {
       const deleted = await deleteInventoryMobile(body.id);
+      revalidatePath('/', 'layout');
+      revalidatePath('/');
       return NextResponse.json({ success: deleted, deletedCount: deleted ? 1 : 0 });
     }
 
@@ -100,6 +111,8 @@ export async function PATCH(req: NextRequest) {
     }
 
     const updatedCount = await bulkUpdateInventoryStatus(ids, { isSold, isUrgentSale });
+    revalidatePath('/', 'layout');
+    revalidatePath('/');
     return NextResponse.json({ success: true, updatedCount });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });

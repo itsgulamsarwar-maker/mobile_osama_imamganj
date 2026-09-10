@@ -357,7 +357,7 @@ export default function CatalogView({
           </h3>
           <p className="text-xs text-slate-400 mb-5 leading-relaxed">
             {searchQuery
-              ? 'Yeh phone abhi counter pe available nahi hai, lekin Osama bhaiya aapke liye arrange karwa sakte hain!'
+              ? 'Yeh phone abhi counter pe available nahi hai, lekin hum aapke liye arrange karwa sakte hain!'
               : 'Try clearing filters to see all available stock.'}
           </p>
 
@@ -372,7 +372,7 @@ export default function CatalogView({
             {searchQuery && (
               <a
                 href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-                  `Hi Osama! I was looking for "${searchQuery}" on your website. Can you check if it is available or arrange it?`
+                  `Hello! I was looking for "${searchQuery}" on 2nd Hand Mobile Hub website. Can you check if it is available or arrange it?`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"

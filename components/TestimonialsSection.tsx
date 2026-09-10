@@ -21,7 +21,7 @@ export default function TestimonialsSection() {
       rating: 5,
       date: '3 days ago',
       review:
-        'Pehle WhatsApp video call pe Osama bhaiya ne pura phone zoom karke dikhaya. S-Pen aur 200MP camera bilkul naya jaisa chal raha hai. 7-Day testing warranty ne pura bharosa diya.',
+        'Pehle WhatsApp video call pe counter staff ne pura phone zoom karke dikhaya. S-Pen aur 200MP camera bilkul naya jaisa chal raha hai. 7-Day testing warranty ne pura bharosa diya.',
     },
     {
       name: 'Aman Singh',

@@ -55,7 +55,7 @@ export default function MobileCard({
 
   const storePhone = whatsappNumber || process.env.NEXT_PUBLIC_STORE_WHATSAPP_NUMBER || '919102609396';
   const whatsappQuery = encodeURIComponent(
-    `Hello Osama! I am interested in buying *${title}* (${variant}) listed for *₹${price.toLocaleString(
+    `Hello! I am interested in buying *${title}* (${variant}) listed on *2nd Hand Mobile Hub* for *₹${price.toLocaleString(
       'en-IN'
     )}* [Condition: ${condition}, Battery: ${batteryHealth || 'N/A'}${
       isUrgentSale ? ' - Urgent Sale' : ''
@@ -64,7 +64,7 @@ export default function MobileCard({
   const whatsappUrl = `https://wa.me/${storePhone}?text=${whatsappQuery}`;
 
   const restockNotifyUrl = `https://wa.me/${storePhone}?text=${encodeURIComponent(
-    `Hello Osama! I saw *${title}* was Sold Out on your website. Please notify me when similar stock arrives.`
+    `Hello! I saw *${title}* was Sold Out on 2nd Hand Mobile Hub website. Please notify me when similar stock arrives.`
   )}`;
 
   const [imgSrc, setImgSrc] = React.useState(primaryImageSrc);

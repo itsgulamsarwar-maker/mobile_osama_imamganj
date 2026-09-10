@@ -58,7 +58,7 @@ export interface SiteSettings {
 }
 
 export const defaultSiteSettings: SiteSettings = {
-  storeName: 'OSAMA MOBILE (Second Hand Mobile Hub)',
+  storeName: '2nd Hand Mobile Hub',
   storeTagline: 'Certified 2nd Hand Smartphones • Kolkata Bus Stand, Imamganj, Gaya',
   phone: '+91 9102609396',
   whatsappNumber: '919102609396',

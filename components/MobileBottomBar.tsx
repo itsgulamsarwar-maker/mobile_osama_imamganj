@@ -16,7 +16,7 @@ export default function MobileBottomBar({
   const storeAddress = settings.address || 'Kolkata Bus Stand, Imamganj, Gaya, Bihar';
 
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    `Hello Osama! I am browsing your website from my mobile and want to buy/inquire about a smartphone.`
+    `Hello! I am browsing ${settings.storeName || '2nd Hand Mobile Hub'} from my mobile and want to buy/inquire about a smartphone.`
   )}`;
 
   const mapsUrl = `https://maps.google.com/?q=${encodeURIComponent(storeAddress)}`;

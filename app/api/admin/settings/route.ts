@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getActiveSiteSettings, updateSiteSettings } from '@/lib/inventoryStore';
 
 export const dynamic = 'force-dynamic';
@@ -22,6 +23,9 @@ export async function POST(req: NextRequest) {
       );
     }
     const updated = await updateSiteSettings(body);
+    revalidatePath('/', 'layout');
+    revalidatePath('/');
+    revalidatePath('/admin');
     return NextResponse.json({ success: true, settings: updated });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });

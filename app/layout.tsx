@@ -19,21 +19,24 @@ const outfit = Outfit({
   display: 'swap',
 });
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export const metadata: Metadata = {
-  title: 'OSAMA MOBILE | Second Hand Mobile Hub Imamganj (Gaya, Bihar)',
+  title: '2nd Hand Mobile Hub | Certified Used Smartphones Imamganj (Gaya, Bihar)',
   description:
-    'Osama Mobile - Kolkata Bus Stand Imamganj (Gaya, Bihar). 100% verified, inspected, second-hand smartphones with battery health check, original accessories, and real-time prices.',
+    '2nd Hand Mobile Hub - Kolkata Bus Stand Imamganj (Gaya, Bihar). 100% verified, inspected, second-hand smartphones with battery health check, original accessories, and real-time prices.',
   keywords: [
-    'osama mobile imamganj',
+    '2nd hand mobile hub',
     'second hand mobile imamganj',
     'used phones gaya bihar',
     'refurbished iphone bihar',
-    'second hand mobile hub',
+    'second hand mobile hub imamganj',
     'samsung galaxy used imamganj',
     'buy used phone on whatsapp',
   ],
   openGraph: {
-    title: 'OSAMA MOBILE | Second Hand Mobile Hub Imamganj',
+    title: '2nd Hand Mobile Hub | Second Hand Mobile Hub Imamganj',
     description:
       'Buy certified used smartphones with genuine battery health and 7-day warranty at Kolkata Bus Stand, Imamganj, Gaya. Instant WhatsApp deal.',
     type: 'website',

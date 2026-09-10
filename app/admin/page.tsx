@@ -326,7 +326,7 @@ export default function AdminDashboardPage() {
     }
   };
 
-  // Save Store Settings (OSAMA MOBILE name change, etc.)
+  // Save Store Settings (2nd Hand Mobile Hub name change, etc.)
   const handleSaveSettings = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!settingsForm.storeName?.trim()) {
@@ -359,7 +359,7 @@ export default function AdminDashboardPage() {
   const handleResetCatalog = async () => {
     if (
       !confirm(
-        'Kya aap catalog ko original 10 verified smartphones aur Osama Mobile settings par reset karna chahte hain?'
+        'Kya aap catalog ko original 10 verified smartphones aur 2nd Hand Mobile Hub settings par reset karna chahte hain?'
       )
     ) {
       return;
@@ -424,7 +424,7 @@ export default function AdminDashboardPage() {
               <div>
                 <div className="flex items-center space-x-2">
                   <h1 className="text-base sm:text-xl font-black text-white tracking-tight leading-tight">
-                    {settings.storeName || 'OSAMA MOBILE'}
+                    {settings.storeName || '2nd Hand Mobile Hub'}
                   </h1>
                   <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
                     ADMIN
@@ -925,7 +925,7 @@ export default function AdminDashboardPage() {
           </div>
         )}
 
-        {/* TAB 2: STORE SETTINGS & STORE NAME (OSAMA MOBILE) */}
+        {/* TAB 2: STORE SETTINGS & STORE NAME (2nd Hand Mobile Hub) */}
         {activeTab === 'settings' && (
           <div className="max-w-4xl mx-auto space-y-6 animate-fadeIn">
             {/* Live Header Preview Box */}
@@ -950,7 +950,7 @@ export default function AdminDashboardPage() {
                   </div>
                   <div>
                     <div className="text-base font-black text-white">
-                      {settingsForm.storeName || 'OSAMA MOBILE'}
+                      {settingsForm.storeName || '2nd Hand Mobile Hub'}
                     </div>
                     <div className="text-[11px] text-slate-400">
                       {settingsForm.storeTagline || 'Imamganj • Second Hand Mobile Hub'}
@@ -987,7 +987,7 @@ export default function AdminDashboardPage() {
                   <input
                     type="text"
                     required
-                    placeholder="e.g. OSAMA MOBILE"
+                    placeholder="e.g. 2nd Hand Mobile Hub"
                     value={settingsForm.storeName}
                     onChange={(e) => setSettingsForm({ ...settingsForm, storeName: e.target.value })}
                     className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white font-bold text-base focus:border-emerald-500 focus:outline-none transition-colors"
@@ -1252,7 +1252,7 @@ export default function AdminDashboardPage() {
               </h3>
               <p className="text-xs text-slate-400 mt-1 leading-relaxed">
                 Agar aapke store catalog me koi test phone ya galti ho gayi ho aur aap original 10
-                phones (iPhone 14 Pro, Galaxy S23 Ultra, Pixel 7 Pro, etc.) aur Osama Mobile
+                phones (iPhone 14 Pro, Galaxy S23 Ultra, Pixel 7 Pro, etc.) aur 2nd Hand Mobile Hub
                 settings ko wapas laana chahte hain, toh yahan se 1-click me reset kar sakte hain.
               </p>
             </div>

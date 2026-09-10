@@ -13,7 +13,7 @@ export default function FloatingWhatsApp({
   whatsappNumber = process.env.NEXT_PUBLIC_STORE_WHATSAPP_NUMBER || '919102609396',
   instagramUrl = process.env.NEXT_PUBLIC_STORE_INSTAGRAM_URL ||
     'https://www.instagram.com/second_hand_mobile_hub1',
-  storeName = 'OSAMA MOBILE',
+  storeName = '2nd Hand Mobile Hub',
 }: FloatingWhatsAppProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -22,19 +22,19 @@ export default function FloatingWhatsApp({
       icon: Video,
       title: 'Video Call Inspection',
       desc: 'Live video phone check',
-      msg: 'Hi Osama! I want to request a live video call to inspect a phone before purchasing.',
+      msg: `Hello! I want to request a live video call to inspect a phone before purchasing at ${storeName}.`,
     },
     {
       icon: RefreshCw,
       title: 'Exchange Old Phone',
       desc: 'Instant trade-in valuation',
-      msg: 'Hi Osama! I want to exchange my old smartphone. What exchange price will I get?',
+      msg: `Hello! I want to exchange my old smartphone at ${storeName}. What exchange price will I get?`,
     },
     {
       icon: Zap,
       title: "Today's Best Deal",
       desc: 'Check new arrivals & urgent sales',
-      msg: "Hi Osama! Can you please share today's newly arrived phones and special discount prices?",
+      msg: `Hello! Can you please share today's newly arrived phones and special discount prices at ${storeName}?`,
     },
   ];
 

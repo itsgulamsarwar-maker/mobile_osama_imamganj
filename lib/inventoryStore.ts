@@ -29,7 +29,7 @@ function ensureDataFile(): InventoryStoreData {
     const initialData: InventoryStoreData = {
       settings: {
         ...defaultSiteSettings,
-        storeName: 'OSAMA MOBILE',
+        storeName: '2nd Hand Mobile Hub',
         storeTagline: 'Certified 2nd Hand Smartphones • Kolkata Bus Stand, Imamganj, Gaya',
       },
       mobiles: mockMobiles,
@@ -53,7 +53,7 @@ function ensureDataFile(): InventoryStoreData {
     const initialData: InventoryStoreData = {
       settings: {
         ...defaultSiteSettings,
-        storeName: 'OSAMA MOBILE',
+        storeName: '2nd Hand Mobile Hub',
         storeTagline: 'Certified 2nd Hand Smartphones • Kolkata Bus Stand, Imamganj, Gaya',
       },
       mobiles: mockMobiles,
@@ -176,7 +176,7 @@ export async function resetInventoryToDefaults(): Promise<InventoryStoreData> {
   const initialData: InventoryStoreData = {
     settings: {
       ...defaultSiteSettings,
-      storeName: 'OSAMA MOBILE',
+      storeName: '2nd Hand Mobile Hub',
       storeTagline: 'Certified 2nd Hand Smartphones • Kolkata Bus Stand, Imamganj, Gaya',
     },
     mobiles: mockMobiles,

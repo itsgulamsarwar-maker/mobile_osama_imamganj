@@ -20,7 +20,7 @@ export default function Header({ settings = defaultSiteSettings }: HeaderProps) 
   const logoSrc = settings.logo ? getImageSrc(settings.logo) : null;
 
   const directSupportUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    `Hello! I am contacting ${settings.storeName || 'Osama Mobile'} regarding available smartphones.`
+    `Hello! I am contacting ${settings.storeName || '2nd Hand Mobile Hub'} regarding available smartphones.`
   )}`;
 
   return (
@@ -65,7 +65,7 @@ export default function Header({ settings = defaultSiteSettings }: HeaderProps) 
                 {logoSrc ? (
                   <Image
                     src={logoSrc}
-                    alt={settings.storeName || 'OSAMA MOBILE'}
+                    alt={settings.storeName || '2nd Hand Mobile Hub'}
                     width={44}
                     height={44}
                     className="w-full h-full object-cover"
@@ -79,7 +79,7 @@ export default function Header({ settings = defaultSiteSettings }: HeaderProps) 
             <div className="min-w-0 flex-1">
               <div className="flex items-center space-x-1.5">
                 <span className="text-base sm:text-lg font-black text-white tracking-tight leading-tight truncate">
-                  {settings.storeName || 'OSAMA MOBILE'}
+                  {settings.storeName || '2nd Hand Mobile Hub'}
                 </span>
                 <span className="hidden xs:inline-flex items-center text-[9px] font-bold px-1.5 py-0.2 rounded-md bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
                   VERIFIED

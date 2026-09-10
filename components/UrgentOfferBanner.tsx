@@ -23,7 +23,7 @@ export default function UrgentOfferBanner({
   const btnText = settings.promoButtonText || 'Claim on WhatsApp';
 
   const claimUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    `Hello Osama! I saw your offer: "${title}". I want to claim this deal on a smartphone.`
+    `Hello! I saw your offer on ${settings.storeName || '2nd Hand Mobile Hub'}: "${title}". I want to claim this deal on a smartphone.`
   )}`;
 
   return (
