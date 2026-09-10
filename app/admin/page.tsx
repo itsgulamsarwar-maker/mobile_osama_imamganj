@@ -37,6 +37,7 @@ import { MobileItem, SiteSettings, defaultSiteSettings } from '@/lib/sanity.clie
 import { getImageSrc } from '@/lib/sanity.image';
 import MobileEditModal from '@/components/admin/MobileEditModal';
 import BulkDeleteConfirmModal from '@/components/admin/BulkDeleteConfirmModal';
+import ThemeToggle from '@/components/ThemeToggle';
 
 type AdminTab = 'inventory' | 'settings' | 'backup';
 
@@ -413,9 +414,13 @@ export default function AdminDashboardPage() {
       <header className="sticky top-0 z-40 bg-[#080c14]/95 backdrop-blur-xl border-b border-white/[0.08]">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-15 sm:h-20 gap-2">
-            {/* Store Branding with Live Dynamic Store Name */}
-            <div className="flex items-center space-x-2.5 sm:space-x-3 min-w-0 flex-1">
-              <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-cyan-400 p-[1.5px] shadow-lg shadow-emerald-500/20 shrink-0">
+            {/* Store Branding with Live Dynamic Store Name - Tap Logo/Title goes to Home */}
+            <Link
+              href="/"
+              title="Go to Homepage (होम स्क्रीन पर जाएं)"
+              className="flex items-center space-x-2.5 sm:space-x-3 min-w-0 flex-1 group cursor-pointer active:scale-95 transition-transform"
+            >
+              <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-cyan-400 p-[1.5px] shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform shrink-0">
                 <div className="w-full h-full bg-[#0b0f19] rounded-[14px] flex items-center justify-center text-emerald-400 font-black">
                   <Smartphone className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
@@ -423,7 +428,7 @@ export default function AdminDashboardPage() {
 
               <div className="min-w-0 flex-1">
                 <div className="flex items-center space-x-1.5 sm:space-x-2">
-                  <h1 className="text-sm sm:text-xl font-black text-white tracking-tight leading-tight truncate">
+                  <h1 className="text-sm sm:text-xl font-black text-white group-hover:text-emerald-400 transition-colors tracking-tight leading-tight truncate">
                     {settings.storeName || '2nd Hand Mobile Hub'}
                   </h1>
                   <span className="text-[9px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 shrink-0">
@@ -431,14 +436,17 @@ export default function AdminDashboardPage() {
                   </span>
                 </div>
                 <p className="text-[10px] sm:text-[11px] text-slate-400 font-medium truncate">
-                  <span className="sm:hidden">Imamganj, Gaya</span>
+                  <span className="sm:hidden">Imamganj • Tap to View Shop</span>
                   <span className="hidden sm:inline">Store Management Dashboard • Gaya, Bihar</span>
                 </p>
               </div>
-            </div>
+            </Link>
 
             {/* Quick Action Links */}
-            <div className="flex items-center space-x-1.5 sm:space-x-3 shrink-0">
+            <div className="flex items-center space-x-1.5 sm:space-x-2.5 shrink-0">
+              {/* Light / Dark Mode Toggle Button */}
+              <ThemeToggle />
+
               <Link
                 href="/"
                 target="_blank"

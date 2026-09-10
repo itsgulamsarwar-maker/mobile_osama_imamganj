@@ -28,8 +28,14 @@ export default function MobileBottomBar({
     }
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const handleHomeClick = () => {
+    if (typeof window !== 'undefined') {
+      if (window.location.pathname === '/') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        window.location.href = '/';
+      }
+    }
   };
 
   return (
@@ -37,9 +43,9 @@ export default function MobileBottomBar({
       <div className="max-w-md mx-auto flex items-center justify-between gap-1">
         {/* Home Button */}
         <button
-          onClick={scrollToTop}
+          onClick={handleHomeClick}
           className="flex flex-col items-center justify-center flex-1 py-1.5 px-1 text-slate-400 hover:text-emerald-400 active:scale-95 transition-all"
-          aria-label="Scroll to top"
+          aria-label="Go to Home"
         >
           <Home className="w-5 h-5 mb-0.5" />
           <span className="text-[10px] font-bold tracking-tight">Home</span>

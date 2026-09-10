@@ -7,6 +7,8 @@ import { Smartphone, Lock, MessageCircle, Phone, MapPin, Instagram, Sparkles } f
 import { SiteSettings, defaultSiteSettings } from '@/lib/sanity.client';
 import { getImageSrc } from '@/lib/sanity.image';
 
+import ThemeToggle from '@/components/ThemeToggle';
+
 interface HeaderProps {
   settings?: SiteSettings;
 }
@@ -58,8 +60,12 @@ export default function Header({ settings = defaultSiteSettings }: HeaderProps) 
       {/* Main App Bar */}
       <div className="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-18">
-          {/* Logo & Store Branding */}
-          <Link href="/" className="flex items-center space-x-2.5 sm:space-x-3 group min-w-0">
+          {/* Logo & Store Branding - Click goes to Home */}
+          <Link
+            href="/"
+            title="Go to Homepage (होम पेज पर जाएं)"
+            className="flex items-center space-x-2.5 sm:space-x-3 group min-w-0 cursor-pointer active:scale-95 transition-transform"
+          >
             <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-cyan-400 p-[1.5px] shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform shrink-0">
               <div className="w-full h-full bg-[#0b0f19] rounded-[14px] flex items-center justify-center text-emerald-400 overflow-hidden">
                 {logoSrc ? (
@@ -78,7 +84,7 @@ export default function Header({ settings = defaultSiteSettings }: HeaderProps) 
 
             <div className="min-w-0 flex-1">
               <div className="flex items-center space-x-1.5">
-                <span className="text-base sm:text-lg font-black text-white tracking-tight leading-tight truncate">
+                <span className="text-base sm:text-lg font-black text-white group-hover:text-emerald-400 transition-colors tracking-tight leading-tight truncate">
                   {settings.storeName || '2nd Hand Mobile Hub'}
                 </span>
                 <span className="hidden xs:inline-flex items-center text-[9px] font-bold px-1.5 py-0.2 rounded-md bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
@@ -92,7 +98,10 @@ export default function Header({ settings = defaultSiteSettings }: HeaderProps) 
           </Link>
 
           {/* Quick Actions Right Bar */}
-          <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
+          <div className="flex items-center space-x-1.5 sm:space-x-2.5 shrink-0">
+            {/* Light / Dark Mode Toggle Button */}
+            <ThemeToggle />
+
             {/* Quick Call Icon Button */}
             <a
               href={`tel:${storePhone.replace(/\s+/g, '')}`}
@@ -108,7 +117,7 @@ export default function Header({ settings = defaultSiteSettings }: HeaderProps) 
               href={instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/[0.05] hover:bg-pink-500/15 text-slate-300 hover:text-pink-400 border border-white/[0.08] hover:border-pink-500/30 transition-all active:scale-95"
+              className="hidden xs:flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/[0.05] hover:bg-pink-500/15 text-slate-300 hover:text-pink-400 border border-white/[0.08] hover:border-pink-500/30 transition-all active:scale-95"
               aria-label="Instagram Profile"
               title="Follow on Instagram"
             >
@@ -130,7 +139,7 @@ export default function Header({ settings = defaultSiteSettings }: HeaderProps) 
               href={directSupportUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center space-x-1.5 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-extrabold bg-[#25D366] hover:bg-[#1EBE5D] text-white shadow-lg shadow-emerald-600/25 transition-all active:scale-95"
+              className="inline-flex items-center space-x-1.5 px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-extrabold bg-[#25D366] hover:bg-[#1EBE5D] text-white shadow-lg shadow-emerald-600/25 transition-all active:scale-95"
             >
               <MessageCircle className="w-4 h-4 fill-white text-transparent shrink-0" />
               <span className="hidden sm:inline">WhatsApp</span>

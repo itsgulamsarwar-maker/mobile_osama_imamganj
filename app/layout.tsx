@@ -48,7 +48,14 @@ export default async function RootLayout({
   const settings = await getActiveSiteSettings();
 
   return (
-    <html lang="en" className={`${plusJakarta.variable} ${outfit.variable}`}>
+    <html lang="en" className={`${plusJakarta.variable} ${outfit.variable}`} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.add('light')}else{document.documentElement.classList.remove('light')}}catch(e){}})()`,
+          }}
+        />
+      </head>
       <body className="min-h-screen flex flex-col bg-slate-950 text-slate-100 font-sans selection:bg-emerald-500 selection:text-white">
         <StorefrontLayout settings={settings}>{children}</StorefrontLayout>
       </body>
